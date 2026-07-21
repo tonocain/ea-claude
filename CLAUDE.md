@@ -22,6 +22,8 @@ MCP servers connected: Miro, Gmail, n8n, trigger.dev. CRM currently in Airtable 
 ## Skills
 Skills live in `.claude/skills/skill-name/SKILL.md`. Build them organically when a workflow repeats — don't scaffold ahead of need. Backlog of candidates: `references/skills-backlog.md`.
 
+Pre-built: 5 BPMN/discovery skills (`discovery`, `bpmn-export`, `miro-bpmn`, `optimize`, `bpmn-xavier`) for mapping and optimizing client business processes. See `.claude/rules/bpmn-discovery.md` for how they chain together and where deliverables live (`WORKSPACE/[cliente]/`).
+
 ## Decision Log
 Log meaningful decisions in `decisions/log.md` (append-only). Format: `[YYYY-MM-DD] DECISION: ... | REASONING: ... | CONTEXT: ...`
 
@@ -40,7 +42,7 @@ Memory + context files + decision log = the assistant gets smarter over time wit
 - Build a skill when the same request keeps repeating.
 
 ## Projects
-Active workstreams live in `projects/`, one folder per project with a `README.md` (status, description, key dates).
+Active workstreams live in `projects/`, one folder per project with a `README.md` (status, description, key dates). Client BPMN/discovery deliverables live in `WORKSPACE/[cliente]/` instead — see `.claude/rules/bpmn-discovery.md`.
 
 ## Templates
 Reusable templates live in `templates/` (e.g. `session-summary.md`).
