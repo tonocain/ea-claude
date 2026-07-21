@@ -16,7 +16,9 @@
 - **T**rigger — phased launch, activated with real usage data.
 - **O**ptimize — 30 days of post-launch optimization on real data.
 
-**Guarantee:** "It works, or we keep working for free." No public pricing — price and scope are defined after the free diagnostic (the Know phase).
+**Guarantee:** "It works, or we keep working for free."
+
+**Pricing:** Formal price list exists for the diagnostic (by number of areas covered: 1 area $10,000 MXN, 2 areas $18,000, 3 areas $20,000, 4 areas $22,000; implementation quoted separately after). Diagnostics are currently offered for free while pre-revenue and building the first client base. Full detail + ICP/avatar: `references/sops/avatar-and-offer.md`.
 
 **Revenue:** Pre-revenue — no clients/revenue yet. Finding first clients is the current #1 business priority.
 
