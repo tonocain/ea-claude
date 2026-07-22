@@ -156,44 +156,41 @@ El emoji va en el **header de la lane** y como **prefijo en las tareas** cuando 
 
 **Estructura:**
 1. Header: pill con el nombre de la empresa + subtítulo italic gris
-2. Título en azul `#0754c5`: `BPMN — [ÁREA] · [EMPRESA]`
+2. Título: `BPMN — [ÁREA] · [EMPRESA]`
 3. Metadata: empresa · fecha · pool
-4. Banner naranja: *"Fase actual: dibujar lo real, no lo ideal..."*
+4. Banner: *"Fase actual: dibujar lo real, no lo ideal..."*
 5. Leyenda BPMN con los 5 elementos + marcador de fricción
 6. **SVG** — pool con swim lanes y diagrama completo
 7. Lista de fricciones priorizadas (🔴/🟠/🟡 + número ligado al diagrama)
 8. Footer con el nombre de la empresa
 
+Color de fondo de página, título, banner y tipografía: ver
+`references/examples/brand-guidelines.md` → "Applied: BPMN diagnostic
+HTML deliverables".
+
 ---
 
 ### Especificación visual del SVG
 
-**Colores base:**
-- Fondo página: `#f4f6fa`
-- Azul primario: `#0754c5`
-
-**Lanes — colores por tipo de actor:**
-
-| Actor | Header | Fondo lane |
-|---|---|---|
-| 🏢 Cliente / externo | `#d97706` naranja | `#fef3e6` |
-| 🤖 IA / Agente | `#0754c5` azul | `#e8f1fe` |
-| 👤 Persona principal (ventas/ops) | `#2f7d32` verde | `#eef7ee` |
-| 👤 Persona técnica/secundaria | `#6b3fa0` morado | `#f3edfb` |
-| ⚙️ Sistema / Automatización | `#374151` gris oscuro | `#f3f4f6` |
+Colores de lanes, bordes, flechas, marcador de fricción y fuente del
+glifo de decisión: ver `references/examples/brand-guidelines.md`.
+Léelo antes de generar el HTML la primera vez en la sesión. Los
+colores de fin-éxito/fin-descarte son una excepción documentada ahí
+(se quedan en verde/rojo universal, no en colores de marca) — no los
+"corrijas".
 
 **Elementos BPMN:**
-- **Tareas:** rectángulo blanco redondeado (rx=6), borde `#1a1a1a` — texto en 2 líneas máximo, claro y concreto
+- **Tareas:** rectángulo blanco redondeado (rx=6) — texto en 2 líneas máximo, claro y concreto
 - **Inicio:** círculo borde fino negro
 - **Fin éxito:** círculo borde grueso verde `#2f7d32`
 - **Fin descarte:** círculo borde grueso rojo `#dc2626`
-- **Decisión XOR:** rombo blanco con × en Georgia serif, etiqueta Sí/No en las flechas salientes
-- **Marcador fricción:** círculo naranja `#d97706` con número blanco — se coloca SOBRE el nodo que genera la fricción
-- **Flechas:** línea sólida negra `#1a1a1a` con `marker-end` arrowhead
+- **Decisión XOR:** rombo blanco con ×, etiqueta Sí/No en las flechas salientes
+- **Marcador fricción:** círculo con número — se coloca SOBRE el nodo que genera la fricción
+- **Flechas:** línea sólida con `marker-end` arrowhead
 
 **Reglas de layout:**
 - Flujo de izquierda a derecha
-- Lane labels: texto rotado -90°, blanco, font-weight 700 — incluir emoji + nombre en mayúsculas
+- Lane labels: texto rotado -90°, font-weight 700 — incluir emoji + nombre en mayúsculas (color de texto por lane: ver brand-guidelines.md — la lane de IA lleva texto negro, no blanco)
 - Profundidad: 10–15 tareas por flujo
 - Sin texto innecesario — el diagrama debe entenderse sin explicación
 

@@ -52,7 +52,7 @@ Active workstreams live in `projects/`, one folder per project with a `README.md
 Reusable templates live in `templates/` (e.g. `session-summary.md`).
 
 ## References
-SOPs and style examples live in `references/sops/` and `references/examples/`.
+SOPs and style examples live in `references/sops/` and `references/examples/`. Any client-facing document (diagnostics, proposals, decks, HTML exports) should follow `references/examples/brand-guidelines.md`.
 
 ## Archives
 Never delete completed or outdated material — move it to `archives/` instead.

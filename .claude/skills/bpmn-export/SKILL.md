@@ -84,17 +84,13 @@ actor type, used for lane color + header emoji:
 | ⚙️ | Existing automation/system | Tool or automated flow already in use (CRM, n8n, etc.) |
 | 🏢 | Client / external | Lead, customer, vendor — outside the business |
 
-Lane header + background by actor type:
+Lane header + background colors, and label text color per actor: see
+`references/examples/brand-guidelines.md` → "Applied: BPMN diagnostic
+HTML deliverables". Read it before generating the HTML the first time
+in a session. Note the AI-agent lane is the one exception with black
+label text (yellow background fails contrast with white).
 
-| Actor type | Header color | Lane background |
-|---|---|---|
-| 🏢 Client/external | `#d97706` | `#fef3e6` |
-| 🤖 AI agent | `#0754c5` | `#e8f1fe` |
-| 👤 Primary human (does most of the work) | `#2f7d32` | `#eef7ee` |
-| 👤 Secondary/technical human | `#6b3fa0` | `#f3edfb` |
-| ⚙️ System/automation | `#374151` | `#f3f4f6` |
-
-Lane label: text rotated -90°, white, bold, emoji + name in caps.
+Lane label: text rotated -90°, bold, emoji + name in caps.
 
 ## Layout rules
 - Left to right flow.
@@ -118,16 +114,19 @@ Lane label: text rotated -90°, white, bold, emoji + name in caps.
 | Complex (12+ tasks, branching) | 2400px | 720px | 3-4 |
 
 ## BPMN elements (5 only — same restraint as the board format)
-- Task: white rounded rect (rx=6), border `#1a1a1a`, 2 lines of text max
+Border, arrow, friction-marker, and diamond-glyph-font colors: see
+`references/examples/brand-guidelines.md`. End success/end discard
+colors are a documented exception there (kept as universal green/red,
+not brand colors) — don't "fix" those.
+- Task: white rounded rect (rx=6), 2 lines of text max
 - Start: thin black-border circle
 - End success: thick green border (`#2f7d32`)
 - End discard: thick red border (`#dc2626`)
-- Decision (XOR): white diamond with × (Georgia serif), Sí/No labels on
-  outgoing arrows
-- Arrows: solid black (`#1a1a1a`) line, `marker-end` arrowhead
-- Friction marker: orange circle (`#d97706`) with white number, placed
-  on top of the node that generates the friction — number links to the
-  friction list below the diagram
+- Decision (XOR): white diamond with ×, Sí/No labels on outgoing arrows
+- Arrows: solid line, `marker-end` arrowhead
+- Friction marker: circle with a number, placed on top of the node that
+  generates the friction — number links to the friction list below the
+  diagram
 
 ## Friction priority
 discovery-output.md tags friction by type (🔴 general / 🟡 dependency /
@@ -144,16 +143,18 @@ File: `bpmn-[proceso]-[cliente].html`, saved inside
 
 Page structure, top to bottom:
 1. Header pill with client name + italic gray subtitle
-2. Title in blue `#0754c5`: `BPMN — [PROCESO] · [CLIENTE]`
+2. Title: `BPMN — [PROCESO] · [CLIENTE]`
 3. Metadata line: cliente · fecha
-4. Orange banner: "Fase actual: dibujar lo real, no lo ideal..."
+4. Banner: "Fase actual: dibujar lo real, no lo ideal..."
 5. Legend: the 5 BPMN elements + friction marker
 6. The SVG diagram (pool + swimlanes)
 7. Friction list, priority-sorted (🔴/🟠/🟡), each number linked to its
    marker on the diagram
 8. Footer with client name
 
-Page background `#f4f6fa`, primary blue `#0754c5`.
+Page background, title color, banner color, and font-family: see
+`references/examples/brand-guidelines.md` → "Applied: BPMN diagnostic
+HTML deliverables".
 
 ## Generation mechanics
 HTML+SVG output routinely exceeds the direct-response token limit.
