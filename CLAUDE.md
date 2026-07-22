@@ -19,7 +19,7 @@ Deliver value to businesses and make a sustainable living from it. Right now tha
 ## Tool Integrations
 MCP servers connected: Miro, Gmail, n8n, trigger.dev. CRM currently in Airtable (migrating to Twenty). Antonio can set up additional MCP servers as needed — ask if a task would benefit from one that isn't connected yet.
 
-Web scraping (Firecrawl) is available globally — no per-project setup needed. Used for prospect research (client capture step 1). Reference: `references/sops/firecrawl-cheatsheet.md`.
+Web scraping (Firecrawl) is available globally — no per-project setup needed. See `.claude/rules/scraping.md` for defaults and `references/sops/firecrawl-cheatsheet.md` for tool reference.
 
 ## Skills
 Skills live in `.claude/skills/skill-name/SKILL.md`. Build them organically when a workflow repeats — don't scaffold ahead of need. Backlog of candidates: `references/skills-backlog.md`.
