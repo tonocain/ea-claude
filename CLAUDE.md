@@ -26,6 +26,8 @@ Skills live in `.claude/skills/skill-name/SKILL.md`. Build them organically when
 
 Pre-built: 5 BPMN/discovery skills (`discovery`, `bpmn-export`, `miro-bpmn`, `optimize`, `bpmn-xavier`) for mapping and optimizing client business processes. See `.claude/rules/bpmn-discovery.md` for how they chain together and where deliverables live (`WORKSPACE/[cliente]/`).
 
+Also pre-built: `automatizaciones-n8n` — creates/reviews n8n workflows, connects to a live n8n instance via `n8n-mcp` (config in `.mcp.json`, gitignored — never commit real n8n credentials). Always asks before executing on a live instance. n8n's own specialist skills (`n8n-workflow-patterns`, `n8n-expression-syntax`, etc.) are installed globally and back it up.
+
 ## Decision Log
 Log meaningful decisions in `decisions/log.md` (append-only). Format: `[YYYY-MM-DD] DECISION: ... | REASONING: ... | CONTEXT: ...`
 
