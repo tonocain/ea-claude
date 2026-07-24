@@ -28,6 +28,8 @@ Pre-built: 5 BPMN/discovery skills (`discovery`, `bpmn-export`, `miro-bpmn`, `op
 
 Also pre-built: `automatizaciones-n8n` — creates/reviews n8n workflows, connects to a live n8n instance via `n8n-mcp` (config in `.mcp.json`, gitignored — never commit real n8n credentials). Always asks before executing on a live instance. n8n's own specialist skills (`n8n-workflow-patterns`, `n8n-expression-syntax`, etc.) are installed globally and back it up.
 
+Also pre-built: `crm-log` — logs lead interactions straight into Antonio's live Airtable CRM ("CRM BASE") via the Airtable MCP, and updates lead stage/follow-up date to keep the CRM coherent. Writes directly (no per-action confirmation) since Antonio asked for low-friction logging — see the skill file for exact field IDs and picklist values.
+
 ## Decision Log
 Log meaningful decisions in `decisions/log.md` (append-only). Format: `[YYYY-MM-DD] DECISION: ... | REASONING: ... | CONTEXT: ...`
 
