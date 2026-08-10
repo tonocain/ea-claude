@@ -21,6 +21,8 @@ MCP servers connected: Miro, Gmail, n8n, trigger.dev. CRM currently in Airtable 
 
 Web scraping (Firecrawl) is available globally — no per-project setup needed. See `.claude/rules/scraping.md` for defaults and `references/sops/firecrawl-cheatsheet.md` for tool reference.
 
+SEO analysis (claude-seo) is available globally — no per-project setup needed. See `.claude/rules/seo.md` for which sub-skill fits a request and current credential status.
+
 ## Skills
 Skills live in `.claude/skills/skill-name/SKILL.md`. Build them organically when a workflow repeats — don't scaffold ahead of need. Backlog of candidates: `references/skills-backlog.md`.
 

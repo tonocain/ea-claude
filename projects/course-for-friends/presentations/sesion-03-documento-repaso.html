@@ -1,0 +1,315 @@
+<!-- Language note: written in Spanish (delivery language for the workshop), not English — mirrors the source script's deviation from the repo default, same logic as client-facing deliverables in WORKSPACE/. -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Master Claude — Sesión 3 · Documento de repaso</title>
+<style>
+  :root{
+    --bg:#FAF9F5;
+    --text:#141413;
+    --muted:#5E5D59;
+    --primary:#C6613F;
+    --secondary:#FEBC2E;
+    --radius:8px;
+    --font-heading:anthropicSerif, Georgia, serif;
+    --font-body:anthropicSans, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  .page{
+    max-width:760px;
+    margin:0 auto;
+    padding:56px 24px 96px;
+  }
+  header.doc-header{margin-bottom:40px;}
+  .logo{height:26px;width:auto;margin-bottom:32px;}
+  .kicker{
+    font-family:var(--font-body);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-weight:700;
+    font-size:13px;
+    color:var(--primary);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--font-heading);
+    font-weight:400;
+    font-size:clamp(30px,5vw,44px);
+    line-height:1.12;
+    margin:0 0 14px;
+  }
+  .doc-subtitle{
+    font-size:18px;
+    color:var(--muted);
+    margin:0;
+    max-width:44em;
+  }
+  nav.toc{
+    margin:32px 0 48px;
+    padding:18px 22px;
+    background:rgba(198,97,63,.06);
+    border:1px solid rgba(198,97,63,.18);
+    border-radius:var(--radius);
+  }
+  nav.toc p{
+    margin:0 0 10px;
+    font-weight:700;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--primary);
+  }
+  nav.toc ol{margin:0;padding-left:20px;}
+  nav.toc li{margin-bottom:4px;}
+  nav.toc a{color:var(--text);text-decoration:none;border-bottom:1px solid rgba(20,20,19,.25);}
+  nav.toc a:hover{border-bottom-color:var(--primary);color:var(--primary);}
+
+  section{margin-bottom:52px;scroll-margin-top:24px;}
+  section.part-divider{
+    margin:64px 0 40px;
+    padding-top:28px;
+    border-top:3px solid var(--primary);
+  }
+  .part-eyebrow{
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    font-size:13px;
+    color:var(--primary);
+    margin:0 0 6px;
+  }
+  h2{
+    font-family:var(--font-heading);
+    font-weight:400;
+    font-size:clamp(24px,3.4vw,32px);
+    margin:0 0 8px;
+  }
+  h3{
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:19px;
+    margin:28px 0 10px;
+  }
+  p{margin:0 0 14px;font-size:16px;}
+  ul,ol{margin:0 0 14px;padding-left:22px;}
+  li{margin-bottom:8px;font-size:16px;}
+  strong{color:var(--text);}
+  .callout{
+    margin:16px 0;
+    border-left:4px solid var(--primary);
+    background:rgba(198,97,63,.07);
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:14px 18px;
+    font-size:15px;
+  }
+  .callout strong{color:var(--primary);}
+  table{
+    border-collapse:collapse;
+    width:100%;
+    margin:16px 0 20px;
+    font-size:14.5px;
+  }
+  th,td{
+    text-align:left;
+    vertical-align:top;
+    padding:10px 14px;
+    line-height:1.45;
+  }
+  th{
+    background:var(--primary);
+    color:var(--bg);
+    font-weight:700;
+    font-size:13.5px;
+  }
+  th:first-child,td:first-child{font-weight:700;}
+  tbody tr:nth-child(odd){background:rgba(20,20,19,.03);}
+  td{border-bottom:1px solid rgba(20,20,19,.08);}
+  .table-wrap{overflow-x:auto;}
+  footer.doc-footer{
+    margin-top:64px;
+    padding-top:24px;
+    border-top:1px solid rgba(20,20,19,.12);
+    color:var(--muted);
+    font-size:14px;
+  }
+  @media print{
+    body{background:#fff;}
+    nav.toc{break-inside:avoid;}
+    section{break-inside:avoid-page;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="doc-header">
+    <img class="logo" alt="Claude" src="data:image/svg+xml;utf8,%3Csvg%20class%3D%22ClaudeWordmark-module-scss-module__u-w1aa__claudeWordmark%22%20viewBox%3D%220%200%20573%20125%22%20fill%3D%22currentColor%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20aria-label%3D%22Claude%22%20data-fc-idx%3D%220%22%3E%3Cpath%20d%3D%22M200.168%20110.625C190.376%20110.625%20181.647%20108.688%20173.98%20104.813C166.355%20100.896%20160.397%2095.4167%20156.105%2088.375C151.814%2081.3333%20149.668%2073.25%20149.668%2064.125C149.668%2054.4167%20151.855%2045.7917%20156.23%2038.25C160.647%2030.7083%20166.751%2024.8542%20174.543%2020.6875C182.335%2016.4792%20191.189%2014.375%20201.105%2014.375C207.064%2014.375%20213.001%2015.0208%20218.918%2016.3125C224.876%2017.5625%20230.105%2019.5208%20234.605%2022.1875V42.75H228.98C227.397%2035.2083%20224.293%2029.7292%20219.668%2026.3125C215.085%2022.8958%20208.814%2021.1875%20200.855%2021.1875C193.23%2021.1875%20186.897%2022.8958%20181.855%2026.3125C176.814%2029.7292%20173.085%2034.5%20170.668%2040.625C168.251%2046.7083%20167.043%2053.7917%20167.043%2061.875C167.043%2069.8333%20168.397%2076.9792%20171.105%2083.3125C173.814%2089.6458%20177.835%2094.6458%20183.168%2098.3125C188.501%20101.979%20194.918%20103.813%20202.418%20103.813C207.501%20103.813%20211.855%20102.813%20215.48%20100.813C219.147%2098.8125%20222.23%2096.0833%20224.73%2092.625C227.23%2089.125%20229.564%2084.8333%20231.73%2079.75H237.605L233.605%20102.313C229.272%20105.104%20224.105%20107.188%20218.105%20108.563C212.105%20109.938%20206.126%20110.625%20200.168%20110.625ZM243.168%20103.938C245.626%20103.646%20247.543%20103.271%20248.918%20102.813C250.335%20102.313%20251.355%20101.646%20251.98%20100.813C252.605%2099.9792%20252.918%2098.9167%20252.918%2097.625V29.5625L243.168%2025.875V21.6875L262.793%2014.375H267.793V97.625C267.793%2098.9167%20268.105%2099.9792%20268.73%20100.813C269.355%20101.646%20270.355%20102.313%20271.73%20102.813C273.147%20103.271%20275.085%20103.646%20277.543%20103.938V109.375H243.168V103.938ZM300.355%20110.625C296.772%20110.625%20293.605%20109.958%20290.855%20108.625C288.105%20107.292%20285.96%20105.417%20284.418%20103C282.918%20100.583%20282.168%2097.7917%20282.168%2094.625C282.168%2090%20283.626%2086.1875%20286.543%2083.1875C289.501%2080.1458%20294.043%2077.75%20300.168%2076L322.855%2069.5625V62.75C322.855%2058.2917%20321.793%2054.9167%20319.668%2052.625C317.585%2050.3333%20314.48%2049.1875%20310.355%2049.1875C306.73%2049.1875%20303.855%2050.2917%20301.73%2052.5C299.647%2054.7083%20298.605%2057.7083%20298.605%2061.5V67.125H288.48C287.272%2066.375%20286.335%2065.3958%20285.668%2064.1875C285.043%2062.9375%20284.73%2061.5625%20284.73%2060.0625C284.73%2057.1042%20285.876%2054.3958%20288.168%2051.9375C290.46%2049.4375%20293.564%2047.4583%20297.48%2046C301.397%2044.5417%20305.689%2043.8125%20310.355%2043.8125C316.189%2043.8125%20321.147%2044.6875%20325.23%2046.4375C329.314%2048.1875%20332.418%2050.7708%20334.543%2054.1875C336.668%2057.6042%20337.73%2061.7292%20337.73%2066.5625V96.25C337.73%2097.7083%20338.022%2098.875%20338.605%2099.75C339.23%20100.625%20340.23%20101.333%20341.605%20101.875C343.022%20102.375%20344.98%20102.771%20347.48%20103.063V108.5C343.855%20109.792%20340.376%20110.438%20337.043%20110.438C333.001%20110.438%20329.751%20109.479%20327.293%20107.563C324.876%20105.646%20323.439%20102.896%20322.98%2099.3125C319.939%20103.063%20316.522%20105.896%20312.73%20107.813C308.939%20109.688%20304.814%20110.625%20300.355%20110.625ZM307.668%20100.625C310.335%20100.625%20312.98%20100%20315.605%2098.75C318.272%2097.4583%20320.689%2095.6667%20322.855%2093.375V75.3125L305.855%2080.375C302.939%2081.25%20300.71%2082.625%20299.168%2084.5C297.626%2086.3333%20296.855%2088.5833%20296.855%2091.25C296.855%2093.0833%20297.314%2094.7083%20298.23%2096.125C299.147%2097.5417%20300.418%2098.6458%20302.043%2099.4375C303.71%20100.229%20305.585%20100.625%20307.668%20100.625ZM376.543%20110.625C369.876%20110.625%20364.814%20108.938%20361.355%20105.563C357.897%20102.146%20356.168%2097.1667%20356.168%2090.625V58.375L346.418%2054.9375V50.75L366.105%2043.8125H371.043V88.0625C371.043%2092.0208%20372.043%2094.9583%20374.043%2096.875C376.043%2098.7917%20379.126%2099.75%20383.293%2099.75C385.96%2099.75%20388.814%2099.1458%20391.855%2097.9375C394.939%2096.7292%20397.814%2095.0625%20400.48%2092.9375V58.375L390.73%2054.9375V50.75L410.418%2043.8125H415.355V92.5C415.355%2093.9583%20415.647%2095.125%20416.23%2096C416.855%2096.875%20417.855%2097.5625%20419.23%2098.0625C420.605%2098.5625%20422.564%2098.9792%20425.105%2099.3125V104.75L405.418%20110H400.48V98.9375C396.98%20102.563%20393.085%20105.417%20388.793%20107.5C384.543%20109.583%20380.46%20110.625%20376.543%20110.625ZM458.73%20110.625C453.105%20110.625%20448.043%20109.354%20443.543%20106.813C439.085%20104.229%20435.585%20100.688%20433.043%2096.1875C430.501%2091.6458%20429.23%2086.5625%20429.23%2080.9375C429.23%2073.6042%20430.751%2067.125%20433.793%2061.5C436.876%2055.875%20441.189%2051.5208%20446.73%2048.4375C452.272%2045.3542%20458.689%2043.8125%20465.98%2043.8125C468.355%2043.8125%20470.772%2044.0625%20473.23%2044.5625C475.73%2045.0625%20478.085%2045.7708%20480.293%2046.6875V29.5625L470.543%2025.875V21.6875L490.168%2014.375H495.168V92.5C495.168%2093.9583%20495.46%2095.125%20496.043%2096C496.668%2096.875%20497.668%2097.5625%20499.043%2098.0625C500.418%2098.5625%20502.376%2098.9792%20504.918%2099.3125V104.75L485.23%20110H480.293V101.438C477.168%20104.396%20473.751%20106.667%20470.043%20108.25C466.335%20109.833%20462.564%20110.625%20458.73%20110.625ZM464.855%20100.563C467.355%20100.563%20469.96%20100.042%20472.668%2099C475.376%2097.9167%20477.918%2096.4583%20480.293%2094.625V56C476.21%2052.6667%20471.751%2051%20466.918%2051C462.168%2051%20458.126%2052.125%20454.793%2054.375C451.46%2056.625%20448.939%2059.7083%20447.23%2063.625C445.564%2067.5417%20444.73%2071.9792%20444.73%2076.9375C444.73%2081.6458%20445.48%2085.7708%20446.98%2089.3125C448.48%2092.8542%20450.73%2095.625%20453.73%2097.625C456.772%2099.5833%20460.48%20100.563%20464.855%20100.563ZM541.293%20110.625C535.168%20110.625%20529.647%20109.229%20524.73%20106.438C519.814%20103.646%20515.96%2099.7708%20513.168%2094.8125C510.418%2089.8125%20509.043%2084.1875%20509.043%2077.9375C509.043%2071.6042%20510.46%2065.8333%20513.293%2060.625C516.126%2055.4167%20520.001%2051.3125%20524.918%2048.3125C529.876%2045.3125%20535.376%2043.8125%20541.418%2043.8125C546.001%2043.8125%20550.272%2044.7708%20554.23%2046.6875C558.189%2048.6042%20561.501%2051.2917%20564.168%2054.75C566.876%2058.2083%20568.668%2062.1667%20569.543%2066.625L524.168%2080.375C525.418%2085.875%20527.897%2090.1875%20531.605%2093.3125C535.355%2096.3958%20539.96%2097.9375%20545.418%2097.9375C550.001%2097.9375%20554.105%2096.8542%20557.73%2094.6875C561.355%2092.4792%20564.564%2089.1458%20567.355%2084.6875L572.168%2086.1875C571.001%2091.1042%20568.939%2095.4167%20565.98%2099.125C563.064%20102.792%20559.48%20105.625%20555.23%20107.625C550.98%20109.625%20546.335%20110.625%20541.293%20110.625ZM553.293%2064.75C552.71%2061.9583%20551.751%2059.5208%20550.418%2057.4375C549.126%2055.3125%20547.501%2053.6875%20545.543%2052.5625C543.585%2051.3958%20541.397%2050.8125%20538.98%2050.8125C535.939%2050.8125%20533.231%2051.7083%20530.856%2053.5C528.481%2055.2917%20526.626%2057.8333%20525.293%2061.125C523.96%2064.375%20523.293%2068.1458%20523.293%2072.4375C523.293%2073.1458%20523.314%2073.7083%20523.355%2074.125L553.293%2064.75Z%22%20style%3D%22fill%3A%20rgb(20%2C%2020%2C%2019)%20!important%3B%22%2F%3E%3Cpath%20d%3D%22M54.375%20118.75L56.125%20111L58.125%20101L59.75%2093L61.25%2083.125L62.125%2079.875L62%2079.625L61.375%2079.75L53.875%2090L42.5%20105.375L33.5%20114.875L31.375%20115.75L27.625%20113.875L28%20110.375L30.125%20107.375L42.5%2091.5L50%2081.625L54.875%2076L54.75%2075.25H54.5L21.5%2096.75L15.625%2097.5L13%2095.125L13.375%2091.25L14.625%2090L24.5%2083.125L49.125%2069.375L49.5%2068.125L49.125%2067.5H47.875L43.75%2067.25L29.75%2066.875L17.625%2066.375L5.75%2065.75L2.75%2065.125L0%2061.375L0.25%2059.5L2.75%2057.875L6.375%2058.125L14.25%2058.75L26.125%2059.5L34.75%2060L47.5%2061.375H49.5L49.75%2060.5L49.125%2060L48.625%2059.5L36.25%2051.25L23%2042.5L16%2037.375L12.25%2034.75L10.375%2032.375L9.625%2027.125L13%2023.375L17.625%2023.75L18.75%2024L23.375%2027.625L33.25%2035.25L46.25%2044.875L48.125%2046.375L49%2045.875V45.5L48.125%2044.125L41.125%2031.375L33.625%2018.375L30.25%2013L29.375%209.75C29.0417%208.625%2028.875%207.375%2028.875%206L32.75%200.750006L34.875%200L40.125%200.750006L42.25%202.625L45.5%2010L50.625%2021.625L58.75%2037.375L61.125%2042.125L62.375%2046.375L62.875%2047.75H63.75V47L64.375%2038L65.625%2027.125L66.875%2013.125L67.25%209.125L69.25%204.375L73.125%201.87501L76.125%203.25L78.625%206.875L78.25%209.125L76.875%2018.75L73.875%2033.875L72%2044.125H73.125L74.375%2042.75L79.5%2036L88.125%2025.25L91.875%2021L96.375%2016.25L99.25%2014H104.625L108.5%2019.875L106.75%2026L101.25%2033L96.625%2038.875L90%2047.75L86%2054.875L86.375%2055.375H87.25L102.125%2052.125L110.25%2050.75L119.75%2049.125L124.125%2051.125L124.625%2053.125L122.875%2057.375L112.625%2059.875L100.625%2062.25L82.75%2066.5L82.5%2066.625L82.75%2067L90.75%2067.75L94.25%2068H102.75L118.5%2069.125L122.625%2071.875L125%2075.125L124.625%2077.75L118.25%2080.875L109.75%2078.875L89.75%2074.125L83%2072.5H82V73L87.75%2078.625L98.125%2088L111.25%20100.125L111.875%20103.125L110.25%20105.625L108.5%20105.375L97%2096.625L92.5%2092.75L82.5%2084.375H81.875V85.25L84.125%2088.625L96.375%20107L97%20112.625L96.125%20114.375L92.875%20115.5L89.5%20114.875L82.25%20104.875L74.875%2093.5L68.875%2083.375L68.25%2083.875L64.625%20121.625L63%20123.5L59.25%20125L56.125%20122.625L54.375%20118.75Z%22%20fill%3D%22%23D97757%22%20style%3D%22fill%3A%20rgb(217%2C%20119%2C%2087)%20!important%3B%22%2F%3E%3C%2Fsvg%3E">
+    <p class="kicker">Master Claude · Documento de repaso</p>
+    <h1>Sesión 3 — MCP Servers</h1>
+    <p class="doc-subtitle">Todo lo que vimos en la tercera sesión, explicado con calma para que lo repases a tu propio ritmo — no hace falta haber tomado notas en vivo.</p>
+  </header>
+
+  <nav class="toc" aria-label="Contenido">
+    <p>Contenido</p>
+    <ol>
+      <li><a href="#punto-1">Punto 1 — Qué es un MCP server</a></li>
+      <li><a href="#punto-2">Punto 2 — MCP vs Skills</a></li>
+      <li><a href="#punto-3">Punto 3 — Setup general</a></li>
+      <li><a href="#punto-4">Punto 4 — Las tools de Miro, agrupadas</a></li>
+      <li><a href="#punto-5">Punto 5 — El patrón cheat sheet</a></li>
+      <li><a href="#punto-6">Punto 6 — Self-healing en acción</a></li>
+      <li><a href="#punto-7">Punto 7 — Hands-on de cierre</a></li>
+      <li><a href="#entregable">Tu entregable de hoy</a></li>
+    </ol>
+  </nav>
+
+  <section class="part-divider" id="punto-1">
+    <p class="part-eyebrow">Punto 1</p>
+    <h2>Qué es un MCP server</h2>
+    <p>Por defecto, Claude Code solo puede trabajar con archivos en tu computadora — no puede tocar nada fuera de esa carpeta. Un <strong>MCP (Model Context Protocol) server</strong> es lo que extiende esa capacidad hacia afuera: un puente entre Claude Code y un servicio externo (una API, una base de datos, un board de Miro, lo que sea).</p>
+    <div class="callout"><strong>Analogía:</strong> piénsalo como un app store, o como el puerto USB-C universal — en vez de tener que aprenderte un cable distinto (una integración distinta) para cada servicio, te conectas una vez al "puerto" y de ahí en adelante el agente sabe qué hacer con lo que sea que conectaste.</div>
+
+    <h3>Mecánica, en 2 pasos</h3>
+    <ol>
+      <li><strong>Instalas el servidor MCP una vez</strong> y le das tu API key o credenciales — normalmente vía un archivo <code>.env</code>, <strong>nunca pegada directo en el chat</strong>.</li>
+      <li><strong>A partir de ahí, Claude Code puede usar ese servicio cuando lo necesite.</strong> No eliges tú qué endpoint llamar ni armas la petición a mano — el agente lee las herramientas (<code>tools</code>) que expone el servidor MCP y decide sola cuál invocar según lo que le pediste.</li>
+    </ol>
+  </section>
+
+  <section class="part-divider" id="punto-2">
+    <p class="part-eyebrow">Punto 2</p>
+    <h2>MCP vs Skills — con miro-bpmn como ejemplo real</h2>
+    <p>Dos formas distintas de darle capacidades extra a Claude Code, fáciles de confundir — y hay un ejemplo real, corriendo en este mismo repo, para verlo: la skill <code>miro-bpmn</code>.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>MCP server</th><th>Skill</th></tr></thead>
+      <tbody>
+        <tr><td>Qué hace</td><td>Trae datos y ejecuta acciones sobre un servicio externo real.</td><td>Da conocimiento e instrucciones — cómo hacer algo. No toca nada fuera de tus archivos por sí misma.</td></tr>
+        <tr><td>Se activa</td><td>El agente lee las tools que expone el servidor y decide sola cuál invocar.</td><td>Claude Code revisa qué skills tiene instaladas y carga la que encaje con la petición.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>En miro-bpmn, en concreto</h3>
+    <ul>
+      <li><strong>El MCP de Miro</strong> — tools como <code>layout_create</code>, <code>layout_read</code>, <code>layout_update</code>, <code>board_create</code> — son las que de verdad dibujan figuras en un board real y visible.</li>
+      <li><strong>El <code>SKILL.md</code> de miro-bpmn</strong> — 6 pasos: localizar el <code>discovery-output.md</code>, analizar fases/tareas/gateways, pedir el board, construir el DSL, crear en Miro, validar con el usuario. Puro proceso, ni una sola figura se dibuja desde aquí.</li>
+    </ul>
+
+    <h3>El momento "ahá"</h3>
+    <p>Cuando alguien dice "dibuja el BPMN de [cliente] en Miro", Claude Code carga la skill <code>miro-bpmn</code> porque su <code>description</code> encaja con la petición — la skill es el cerebro que decide <strong>qué</strong> dibujar y <strong>en qué orden</strong>. Pero la skill por sí sola no puede tocar Miro: en el Paso 5 (Crear en Miro), le pasa el trabajo al MCP de Miro, que es quien realmente ejecuta <code>layout_create</code> y hace aparecer las figuras en el board.</p>
+    <div class="callout"><strong>Skill = cómo. MCP = manos.</strong></div>
+
+    <h3>¿Cuándo usar cuál?</h3>
+    <p>La regla simple: ¿necesitas que el agente toque algo fuera de sus archivos locales (un board, un email, una base de datos)? <strong>MCP.</strong> ¿Te encuentras repitiéndole lo mismo una y otra vez sobre cómo hacer algo? <strong>Skill.</strong></p>
+  </section>
+
+  <section class="part-divider" id="punto-3">
+    <p class="part-eyebrow">Punto 3</p>
+    <h2>Setup general — cómo se conecta cualquier MCP server</h2>
+    <p>Mismos 4 pasos sin importar cuál sea el servicio (Miro, Gmail, Airtable, lo que sea):</p>
+    <ol>
+      <li><strong>Crear un <code>.env</code></strong> en el proyecto para guardar la API key.</li>
+      <li><strong>Pedirle a Claude Code que instale/conecte el servidor MCP</strong> — cada servicio publica su propio comando de instalación en su documentación (buscar "[nombre del servicio] MCP server" o "running on Claude Code").</li>
+      <li><strong>Pegar la API key</strong> (sacada del dashboard del servicio) en el <code>.env</code> y guardar. <strong>Nunca se pega la key directo en el chat.</strong></li>
+      <li><strong>Recargar la ventana</strong> (<code>Cmd/Ctrl+Shift+P</code> → "Developer: Reload Window") para que Claude Code reconozca el nuevo servidor MCP.</li>
+    </ol>
+  </section>
+
+  <section class="part-divider" id="punto-4">
+    <p class="part-eyebrow">Punto 4</p>
+    <h2>Las tools de Miro, agrupadas</h2>
+    <p>El MCP de Miro conectado en este entorno expone <strong>más de 30 tools</strong> — bastante más que un MCP típico como Firecrawl, que solo expone alrededor de 5. Agrupadas por categoría:</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Categoría</th><th>Tools de ejemplo</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td>Boards</td><td><code>board_create</code>, <code>board_search_boards</code>, <code>board_list_items</code></td><td>Crear un board nuevo, buscar uno existente, listar qué hay dentro.</td></tr>
+        <tr><td>Layout / diagramas ⭐</td><td><code>layout_create</code>, <code>layout_read</code>, <code>layout_update</code>, <code>layout_get_dsl</code></td><td>Dibujar y editar figuras/conectores en un board — las que usa miro-bpmn.</td></tr>
+        <tr><td>Documentos</td><td><code>doc_create</code>, <code>doc_get</code>, <code>doc_update</code></td><td>Crear y editar documentos dentro de Miro.</td></tr>
+        <tr><td>Tablas</td><td><code>table_create</code>, <code>table_sync_rows</code>, <code>table_list_rows</code></td><td>Tablas de datos dentro de un board.</td></tr>
+        <tr><td>Imágenes</td><td><code>image_create</code>, <code>image_get_url</code></td><td>Subir o insertar imágenes.</td></tr>
+        <tr><td>Prototipos</td><td><code>prototype_create</code></td><td>Prototipos interactivos.</td></tr>
+        <tr><td>Comentarios</td><td><code>comment_create</code>, <code>comment_list_comments</code></td><td>Dejar y leer comentarios en el board.</td></tr>
+      </tbody>
+    </table></div>
+    <p>miro-bpmn no usa las 30+ tools — solo necesita 4-5 del grupo de layout, más <code>board_create</code> cuando hace falta un board nuevo. Una skill bien enfocada no tiene que dominar todo lo que el MCP ofrece, solo la porción que su tarea específica necesita.</p>
+  </section>
+
+  <section class="part-divider" id="punto-5">
+    <p class="part-eyebrow">Punto 5</p>
+    <h2>El patrón cheat sheet</h2>
+    <p>Cuando un MCP expone varias tools (como Miro con sus 30+), ayuda pedirle a Claude que genere un <strong>cheat sheet</strong> en markdown dentro del proyecto: qué tools hay disponibles y cuándo usar cada una, con el detalle técnico necesario. Le da a Claude Code una referencia rápida para acertar a la primera en vez de ir descubriendo a prueba y error.</p>
+    <div class="callout"><strong>Ejemplo real — miro-bpmn/reference.md:</strong> no es teoría, es el archivo que ya existe en este repo.</div>
+    <p>Contiene, entre otras cosas:</p>
+    <ul>
+      <li><strong>Qué tool usar y cuál NO</strong> — <code>layout_create</code> sí, <code>diagram_create</code> no (ese solo sirve para flowchart/uml/erd genéricos, sin vocabulario para BPMN con colores de fase).</li>
+      <li><strong>Constantes de layout exactas</strong> — distancias entre nodos, alturas de fila, tamaños de figura — para que cada diagrama salga con la misma proporción sin que Claude las tenga que inventar cada vez.</li>
+      <li><strong>Reglas aprendidas en producción</strong> — errores reales que ya pasaron y cómo evitarlos, para no repetirlos.</li>
+    </ul>
+    <p><strong>Por qué se mantiene separado del SKILL.md / CLAUDE.md:</strong> el <code>SKILL.md</code> de miro-bpmn se queda corto y legible (los 6 pasos del proceso) y solo <strong>apunta</strong> al <code>reference.md</code> para el detalle técnico pesado. Mismo criterio de "contexto mínimo necesario" que ya viste con el <code>CLAUDE.md</code> en la Sesión 1 — no todo tiene que vivir en el mismo archivo.</p>
+  </section>
+
+  <section class="part-divider" id="punto-6">
+    <p class="part-eyebrow">Punto 6</p>
+    <h2>Self-healing en acción — la regla real de miro-bpmn</h2>
+    <p>Hay dos formas de que una skill se autocorrija cuando algo falla. Un ejemplo es el de Firecrawl: un <code>extract</code> que devolvió vacío, y el agente lo detectó y cambió de estrategia solo, en el momento. Aquí vemos un ejemplo distinto, más concreto: una regla que ya está escrita en <code>miro-bpmn/SKILL.md</code> para cuando falla la llamada al MCP de Miro.</p>
+
+    <h3>La situación</h3>
+    <p><code>layout_create</code> recibe el diagrama completo en una sola llamada — shapes, texto, conectores, todo junto. Si un solo parámetro está mal (ej. una figura con <code>size &lt; 10</code>), el MCP rechaza <strong>todo el lote</strong> con un error HTTP 400 — no dice cuál de los 20-30 elementos fue el culpable.</p>
+
+    <h3>La regla: bisectar</h3>
+    <p>En vez de reintentar a ciegas o rendirse, <strong>bisectar</strong> — partir el lote a la mitad, reenviar cada mitad por separado para ver cuál falla, y repetir sobre la mitad culpable hasta aislar el elemento exacto. La skill incluso anota de antemano dónde suele estar el problema ("casi siempre es un <code>size</code> chico en un gateway"), porque ya pasó antes.</p>
+
+    <h3>Dos sabores de self-healing</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th></th><th>En el momento</th><th>Pre-escrito en la skill</th></tr></thead>
+      <tbody>
+        <tr><td>Ejemplo</td><td>Firecrawl — un extract que devolvió vacío.</td><td>miro-bpmn — la regla de bisección.</td></tr>
+        <tr><td>Cómo funciona</td><td>El agente descubre el problema y decide cómo resolverlo ahí mismo, improvisando.</td><td>Alguien ya vivió ese error una vez, y la solución quedó anotada en el SKILL.md/reference.md para la próxima.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout">Esto es literalmente el ciclo de feedback de la Sesión 2 en acción: la skill se afinó después de un fallo real.</div>
+  </section>
+
+  <section class="part-divider" id="punto-7">
+    <p class="part-eyebrow">Punto 7</p>
+    <h2>Hands-on de cierre — MCP + mini skill, mismo patrón que miro-bpmn</h2>
+    <p>Sobre el mismo proyecto de las Sesiones 1 y 2.</p>
+    <ol>
+      <li><strong>Identificar el servicio externo</strong> que te serviría tocar de verdad (Gmail, Airtable, Google Calendar, tu CRM — lo que ya uses en tu negocio).</li>
+      <li><strong>Conectarlo como MCP</strong> siguiendo los 4 pasos del Punto 3.</li>
+      <li><strong>Explorar sus tools</strong> — pedirle a Claude Code que liste qué puede hacer ese MCP, igual que viste con Miro en el Punto 4.</li>
+      <li><strong>Construir una mini skill</strong> que lo use — aplicando el framework de 6 pasos de la Sesión 2, sobre una tarea puntual de tu negocio. Mismo patrón que miro-bpmn: la skill decide el cómo, el MCP pone las manos.</li>
+      <li><strong>Probarla en vivo</strong> — tiene que producir un resultado real y visible (un email de verdad, una fila real en una hoja, lo que sea), no solo texto describiendo lo que haría.</li>
+      <li><strong>Si algo falla:</strong> aplicar el Punto 6 — diagnosticar antes de rendirte, y anotar la solución en el <code>SKILL.md</code> para la próxima vez.</li>
+    </ol>
+  </section>
+
+  <section id="entregable">
+    <h2>Tu entregable de hoy</h2>
+    <ol>
+      <li>Identificar el servicio externo relevante para tu negocio.</li>
+      <li>Conectarlo como MCP.</li>
+      <li>Explorar sus tools.</li>
+      <li>Construir una mini skill que lo use.</li>
+      <li>Probarla en vivo, con un resultado real.</li>
+    </ol>
+    <div class="callout"><strong>Entregable de la sesión:</strong> un MCP conectado + una mini skill que lo usa, probada en vivo con un resultado real, sobre tu propio negocio.</div>
+  </section>
+
+  <footer class="doc-footer">
+    <p>Nos vemos en la Sesión 4: Automatización Clásica.</p>
+  </footer>
+
+</div>
+</body>
+</html>

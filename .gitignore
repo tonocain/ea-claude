@@ -4,3 +4,13 @@ CLAUDE.local.md
 .mcp.json
 node_modules/
 .DS_Store
+
+# Firecrawl scrape cache — regenerable output, not source
+.firecrawl/
+
+# Obsidian local editor state
+.obsidian/
+
+# Generated media — 139MB of demo video, keep it out of git history
+*.mp4
+*.mp3

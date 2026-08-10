@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Ventas · Taller Mecánico Rodríguez</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --red:#dc2626;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .header-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logo-k{
+    flex:0 0 auto;
+    width:36px;
+    height:36px;
+    background:var(--black);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .logo-k span{
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:19px;
+    line-height:1;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header-row">
+    <div class="logo-k"><span>K</span></div>
+    <span class="pill">TALLER MECÁNICO RODRÍGUEZ</span>
+  </div>
+  <p class="subtitle">Empresa ficticia — ejercicio de práctica de discovery BPMN</p>
+
+  <h1>BPMN — VENTAS · TALLER MECÁNICO RODRÍGUEZ</h1>
+  <p class="meta">Empresa: Taller Mecánico Rodríguez · Fecha: 31 de julio de 2026 · Pool: Ventas</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se vende hoy en el taller, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway XOR)
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="20" viewBox="0 0 30 20"><rect x="1" y="1" width="10" height="18" fill="#4a4a4a"/><rect x="11" y="1" width="18" height="18" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/></svg>
+      Responsable / lane
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Fin — éxito
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Fin — descarte
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2200 720" width="2200" height="720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="0" y="0" width="2200" height="660" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: CLIENTE -->
+      <rect x="44" y="0" width="2156" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="0" y="0" width="44" height="140" fill="#111111"/>
+      <text x="22" y="74" font-family="Trebuchet MS, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 22 70)">🏢 CLIENTE</text>
+
+      <!-- Lane 2: ASESOR DE SERVICIO (LUPE) -->
+      <rect x="44" y="140" width="2156" height="200" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="0" y="140" width="44" height="200" fill="#0A0A0A"/>
+      <text x="22" y="244" font-family="Trebuchet MS, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 22 240)">👤 ASESOR DE SERVICIO (LUPE)</text>
+
+      <!-- Lane 3: MECÁNICO (DON CHUY) -->
+      <rect x="44" y="340" width="2156" height="160" fill="#f0f0f0" stroke="#111111" stroke-width="1.5"/>
+      <rect x="0" y="340" width="44" height="160" fill="#4a4a4a"/>
+      <text x="22" y="424" font-family="Trebuchet MS, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 22 420)">👤 MECÁNICO (DON CHUY)</text>
+
+      <!-- Lane 4: DUEÑO (SR. RODRÍGUEZ) -->
+      <rect x="44" y="500" width="2156" height="160" fill="#f0f0f0" stroke="#111111" stroke-width="1.5"/>
+      <rect x="0" y="500" width="44" height="160" fill="#4a4a4a"/>
+      <text x="22" y="584" font-family="Trebuchet MS, Arial, sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 22 580)">👤 DUEÑO (SR. RODRÍGUEZ)</text>
+
+      <!-- ================= NODES: CLIENTE lane ================= -->
+
+      <!-- START event -->
+      <circle cx="100" cy="70" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="100" y="74" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">Inicio</text>
+
+      <!-- FIN - descarte -->
+      <circle cx="830" cy="70" r="28" fill="#FFFFFF" stroke="#dc2626" stroke-width="7"/>
+      <text x="830" y="66" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="830" y="120" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9.5" fill="#666666" text-anchor="middle">Lead perdido</text>
+      <!-- Friction marker 2 on FIN-descarte -->
+      <circle cx="852" cy="48" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="852" y="52" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- t_recoge -->
+      <rect x="1550" y="25" width="200" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1650" y="65" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1650" dy="0">Cliente recoge el vehículo</tspan>
+        <tspan x="1650" dy="14">y paga (efectivo o transferencia)</tspan>
+      </text>
+
+      <!-- FIN - éxito -->
+      <circle cx="1850" cy="70" r="28" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="1850" y="66" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="1850" y="120" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9.5" fill="#666666" text-anchor="middle">Entregado</text>
+
+      <!-- ================= NODES: ASESOR lane (main flow) ================= -->
+
+      <!-- A1: pregunta síntoma -->
+      <rect x="160" y="195" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="250" y="233" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="250" dy="0">Asesor pregunta síntoma</tspan>
+        <tspan x="250" dy="14">y datos del vehículo</tspan>
+      </text>
+
+      <!-- D1: ¿requiere diagnóstico físico? -->
+      <text x="430" y="163" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="430" dy="0">¿Requiere diagnóstico</tspan>
+        <tspan x="430" dy="13">físico?</tspan>
+      </text>
+      <polygon points="430,195 475,240 430,285 385,240" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="430" y="245" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- A2: cotiza (a mano) -->
+      <rect x="560" y="195" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="650" y="233" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="650" dy="0">Asesor cotiza servicio y</tspan>
+        <tspan x="650" dy="14">refacciones (a mano)</tspan>
+      </text>
+      <!-- Friction marker 1 on A2 -->
+      <circle cx="748" cy="187" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="748" y="191" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- D2: ¿cliente acepta la cotización? -->
+      <text x="830" y="163" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="830" dy="0">¿Cliente acepta la</tspan>
+        <tspan x="830" dy="13">cotización?</tspan>
+      </text>
+      <polygon points="830,195 875,240 830,285 785,240" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="830" y="245" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D3: ¿descuento solicitado >15%? -->
+      <text x="1010" y="163" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1010" dy="0">¿Descuento solicitado</tspan>
+        <tspan x="1010" dy="13">&gt;15%?</tspan>
+      </text>
+      <polygon points="1010,195 1055,240 1010,285 965,240" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1010" y="245" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- A3: agenda fecha de entrega -->
+      <rect x="1140" y="195" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1230" y="233" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1230" dy="0">Asesor agenda fecha de</tspan>
+        <tspan x="1230" dy="14">entrega según refacciones</tspan>
+      </text>
+      <!-- Friction marker 4 on A3 -->
+      <circle cx="1328" cy="187" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1328" y="191" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">4</text>
+
+      <!-- A4: avisa al cliente -->
+      <rect x="1360" y="195" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1450" y="233" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1450" dy="0">Asesor avisa al cliente que</tspan>
+        <tspan x="1450" dy="14">el vehículo está listo</tspan>
+      </text>
+      <!-- Friction marker 5 on A4 -->
+      <circle cx="1548" cy="187" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1548" y="191" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">5</text>
+
+      <!-- ================= NODES: MECÁNICO lane (dips) ================= -->
+
+      <!-- M1: mecánico revisa el vehículo -->
+      <rect x="450" y="375" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="540" y="413" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="540" dy="0">Mecánico revisa el vehículo</tspan>
+        <tspan x="540" dy="14">y determina la falla</tspan>
+      </text>
+
+      <!-- M2: mecánico realiza el servicio -->
+      <rect x="1250" y="375" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1340" y="424" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Mecánico realiza el servicio</text>
+
+      <!-- ================= NODES: DUEÑO lane (dip) ================= -->
+
+      <!-- O1: dueño autoriza el descuento -->
+      <rect x="1030" y="535" width="180" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1120" y="584" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Dueño autoriza el descuento</text>
+      <!-- Friction marker 3 on O1 -->
+      <circle cx="1218" cy="527" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1218" y="531" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">3</text>
+
+      <!-- ================= ARROWS ================= -->
+
+      <!-- 1. Start -> A1 (cross-lane handoff, cliente -> asesor) -->
+      <line x1="100" y1="98" x2="250" y2="195" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 2. A1 -> D1 -->
+      <line x1="340" y1="240" x2="385" y2="240" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 3. D1 "Sí" -> M1 -->
+      <line x1="430" y1="285" x2="510" y2="375" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="480" y="322" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- 4. M1 -> A2 -->
+      <line x1="570" y1="375" x2="650" y2="285" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 5. D1 "No" -> A2 (direct, same lane) -->
+      <line x1="475" y1="240" x2="560" y2="240" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="510" y="230" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">No</text>
+
+      <!-- 6. A2 -> D2 -->
+      <line x1="740" y1="240" x2="785" y2="240" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 7. D2 "No" -> FIN-descarte -->
+      <line x1="830" y1="195" x2="830" y2="98" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="845" y="150" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- 8. D2 "Sí" -> D3 -->
+      <line x1="875" y1="240" x2="965" y2="240" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="920" y="230" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- 9. D3 "Sí" -> O1 -->
+      <line x1="1010" y1="285" x2="1090" y2="535" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1030" y="330" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- 10. O1 -> A3 -->
+      <line x1="1150" y1="535" x2="1210" y2="285" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 11. D3 "No" -> A3 (direct, same lane) -->
+      <line x1="1055" y1="240" x2="1140" y2="240" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1097" y="230" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">No</text>
+
+      <!-- 12. A3 -> M2 -->
+      <line x1="1250" y1="285" x2="1310" y2="375" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 13. M2 -> A4 -->
+      <line x1="1370" y1="375" x2="1450" y2="285" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 14. A4 -> t_recoge (final handoff, asesor -> cliente) -->
+      <line x1="1450" y1="195" x2="1650" y2="115" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- 15. t_recoge -> FIN-éxito -->
+      <line x1="1750" y1="70" x2="1822" y2="70" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad del flujo)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>Todo se cotiza y anota a mano, sin ningún sistema — sin respaldo digital.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>Cuando el cliente rechaza la cotización, nadie registra el motivo — el lead se pierde sin seguimiento posible.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">3</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>Dependencia total del dueño para autorizar descuentos &gt;15%; si no está disponible, el proceso completo se detiene.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">4</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>No hay control de inventario de refacciones — se promete fecha de entrega sin checar si hay stock, generando retrasos.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">5</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>El aviso depende de que el asesor se acuerde — no hay recordatorio, genera llamadas de clientes molestos.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>TALLER MECÁNICO RODRÍGUEZ — Project Krato · Ejercicio de práctica de discovery BPMN (empresa ficticia)</footer>
+
+</div>
+</body>
+</html>

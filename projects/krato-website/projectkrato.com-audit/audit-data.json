@@ -1,0 +1,246 @@
+{
+  "summary": {
+    "health_score": 70,
+    "business_type": "Professional Services / B2B Agency (AI sales systems + custom software for SMBs, Mexico)",
+    "top_findings": [
+      "og:image (social share preview) shows stale messaging from an old brand positioning — contradicts the current site entirely",
+      "No E-E-A-T signals: no About/founder page, no bio, no sameAs social links, no client proof",
+      "Single landing page is asked to rank for several distinct, high-intent keyword clusters at once — thin relative to that ambition",
+      "sitemap.xml only lists the homepage; aviso-legal.html (indexable) is missing",
+      "No security headers beyond HSTS (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy all absent)"
+    ],
+    "quick_wins": [
+      "Add aviso-legal.html to sitemap.xml",
+      "Remove the 3 mismatched aria-label attributes (nav logo, footer email, footer phone)",
+      "Fix the favicon <link> that declares type=\"image/png\" for an .svg file",
+      "Trim the title tag (~71 chars) and meta description (~165 chars) to avoid SERP truncation",
+      "Add a Netlify _headers file with standard security headers"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 82,
+      "what_works": [
+        "HTTPS + HSTS enforced",
+        "Clean http->https and www->apex redirects",
+        "robots.txt present, permissive, references sitemap, no AI-crawler blocks",
+        "Valid canonical on homepage",
+        "Real 404 status on missing pages",
+        "Fast server response (130ms)"
+      ],
+      "findings": [
+        {
+          "title": "sitemap.xml missing aviso-legal.html",
+          "severity": "High",
+          "description": "sitemap.xml lists only https://projectkrato.com/ with lastmod 2026-07-15. aviso-legal.html is indexable (robots: index,follow, has its own canonical) but absent from the sitemap.",
+          "recommendation": "Add a <url> entry for https://projectkrato.com/aviso-legal.html."
+        },
+        {
+          "title": "Missing standard security headers",
+          "severity": "High",
+          "description": "curl -I shows only strict-transport-security. No Content-Security-Policy, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, or Permissions-Policy.",
+          "recommendation": "Add a Netlify _headers file (or netlify.toml [[headers]] block) with the standard set — no application code changes needed."
+        },
+        {
+          "title": "Favicon <link> type/href mismatch",
+          "severity": "Low",
+          "description": "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon.svg\"> declares a PNG type but points at an SVG file.",
+          "recommendation": "Correct the type attribute or remove the redundant line (the first <link rel=\"icon\"> already covers SVG)."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 55,
+      "what_works": [
+        "Clear, on-brand value proposition, direct hero framing",
+        "Consistent voice/tone matching documented brand guidelines",
+        "No duplicate content"
+      ],
+      "findings": [
+        {
+          "title": "Single page covering multiple distinct keyword clusters",
+          "severity": "High",
+          "description": "~500 words on the homepage try to serve CRM con IA, agentes de voz, software a medida, and automatización de ventas simultaneously.",
+          "recommendation": "Split into dedicated service pages once there's enough content per service, or deepen each homepage section first."
+        },
+        {
+          "title": "No E-E-A-T signals",
+          "severity": "High",
+          "description": "No About/founder page, no bio for Antonio Cain, no sameAs links to a real professional profile, no case studies or testimonials.",
+          "recommendation": "Add a short founder/about section with credentials and a real LinkedIn link — highest-leverage trust fix available given the service is expensive and intangible."
+        },
+        {
+          "title": "No client proof",
+          "severity": "Medium",
+          "description": "Expected pre-revenue, but worth flagging as the single biggest content lever once the first client lands.",
+          "recommendation": "Add a case study or quote as soon as one real client exists."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 72,
+      "what_works": [
+        "Single H1, clean heading hierarchy (4x h2, 7x h3, no skipped levels)",
+        "Complete Open Graph + Twitter Card tags with correct image dimensions",
+        "Canonical and viewport meta present"
+      ],
+      "findings": [
+        {
+          "title": "Title tag too long (~71 chars)",
+          "severity": "Medium",
+          "description": "\"Project Krato | Sistemas de Venta con IA + Software a Medida | México\" risks SERP truncation.",
+          "recommendation": "Trim to ~58-60 chars, e.g. \"Project Krato — Sistemas de Venta con IA para PYMEs México\"."
+        },
+        {
+          "title": "Meta description too long (~165 chars)",
+          "severity": "Medium",
+          "description": "Over the ~155-160 char comfort zone before Google truncates it in the SERP.",
+          "recommendation": "Tighten to the strongest single sentence + CTA, under 155 characters."
+        },
+        {
+          "title": "Minimal internal linking",
+          "severity": "Low",
+          "description": "Only in-page anchors exist; aviso-legal.html is the only other real page.",
+          "recommendation": "Resolves naturally as more pages get added."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 75,
+      "what_works": [
+        "Valid ProfessionalService JSON-LD, confirmed via JSON parse",
+        "Good field coverage: contactPoint (x2, correctly typed), makesOffer (both service lines), areaServed, address"
+      ],
+      "findings": [
+        {
+          "title": "No sameAs links",
+          "severity": "Medium",
+          "description": "No social/professional profile links in the schema.",
+          "recommendation": "Add once a real LinkedIn (or similar) profile exists."
+        },
+        {
+          "title": "No founder/Person entity",
+          "severity": "Low",
+          "description": "Antonio Cain isn't represented as a Person entity tied to the ProfessionalService.",
+          "recommendation": "Add once the About/bio content exists."
+        }
+      ]
+    },
+    {
+      "name": "Performance",
+      "score": 92,
+      "what_works": [
+        "Lighthouse (mobile, throttled): Performance 95, LCP 1.1s, CLS 0, FCP 0.9s, Speed Index 2.6s",
+        "Server response 130ms",
+        "No unminified CSS/JS or unused-code savings detected"
+      ],
+      "findings": [
+        {
+          "title": "TBT slightly elevated",
+          "severity": "Low",
+          "description": "Total Blocking Time is 260ms vs. the <200ms 'good' threshold, likely from the conditionally-loaded Spline 3D viewer (already desktop-gated at >960px).",
+          "recommendation": "Optional: defer the Spline script with requestIdleCallback for extra headroom."
+        },
+        {
+          "title": "3 links with mismatched aria-label",
+          "severity": "Low",
+          "description": "nav-logo, footer email link, and footer phone link all have an aria-label that doesn't contain their visible text (WCAG 2.5.3), surfaced by the same Lighthouse run.",
+          "recommendation": "Remove the redundant aria-label on all three — visible text already serves as a good accessible name."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness (GEO)",
+      "score": 55,
+      "what_works": [
+        "robots.txt fully open to AI crawlers (GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot)",
+        "Content structured in short, scannable, declarative blocks",
+        "Valid ProfessionalService schema gives LLMs an unambiguous entity description"
+      ],
+      "findings": [
+        {
+          "title": "No llms.txt",
+          "severity": "Medium",
+          "description": "Checked live — 404. Optional but on-brand given Project Krato's own AI positioning.",
+          "recommendation": "Add a short llms.txt summarizing the business and linking to service descriptions."
+        },
+        {
+          "title": "No FAQ/Q&A structure",
+          "severity": "Medium",
+          "description": "Nothing is framed as directly citable question-and-answer content.",
+          "recommendation": "Add a short FAQ block with FAQPage schema once common prospect questions are known."
+        },
+        {
+          "title": "Thin content limits citability",
+          "severity": "Medium",
+          "description": "Same root cause as the Content Quality thinness finding.",
+          "recommendation": "Shared fix with content-depth work."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 60,
+      "what_works": [
+        "No <img> tags at all — zero missing-alt-text issues by construction",
+        "All decorative visuals are inline SVG, correctly aria-hidden"
+      ],
+      "findings": [
+        {
+          "title": "og-image.jpg shows stale, contradictory messaging",
+          "severity": "High",
+          "description": "Downloaded and viewed the live asset: it reads 'Inteligencia digital que convierte datos en decisiones' / 'Agencia de Inteligencia Digital · México' — an old positioning that contradicts the current site ('Tu negocio no tiene un problema de leads, tiene un problema de sistema'). Anyone sharing the homepage link sees this outdated preview card.",
+          "recommendation": "Regenerate og-image.jpg (1200x630) with current messaging and the corrected logo (black square, lime K)."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          "None — no issues found that block indexing or risk a penalty"
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Regenerate og-image.jpg with current messaging and corrected logo",
+          "Add aviso-legal.html to sitemap.xml",
+          "Add a Netlify _headers file with standard security headers",
+          "Draft a short founder/about section with a real LinkedIn link"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Expand each service section with more depth, or split into dedicated service pages",
+          "Add a short FAQ block with FAQPage schema",
+          "Add llms.txt",
+          "Add the first case study/testimonial as soon as a client exists",
+          "Add sameAs + founder Person entity to the schema once profile links exist"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          "Register Google Search Console and GA4 (neither had credentials configured at audit time) to get real indexation and query data",
+          "Re-run this audit after the Phase 2/3 items ship to confirm score movement"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

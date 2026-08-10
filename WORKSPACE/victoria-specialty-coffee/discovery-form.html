@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Discovery digital — Victoria Specialty Coffee</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
+    color: #0A0A0A;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 20px 16px 24px 16px;
+    background: #FFFFFF;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    background: #0A0A0A;
+    color: #E8FF47;
+    font-weight: 700;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .brand-word {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #0A0A0A;
+  }
+
+  .title-banner {
+    background: #E8FF47;
+    color: #0A0A0A;
+    padding: 12px 14px;
+    margin-bottom: 4px;
+  }
+  .title-banner h1 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .sub { font-size: 13px; color: #555555; margin: 8px 0 18px 0; }
+
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .meta-row > div { flex: 1; }
+  label.field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #555555;
+    margin-bottom: 4px;
+  }
+  input[type="text"], input[type="date"], textarea {
+    width: 100%;
+    font-size: 15px;
+    padding: 8px;
+    border: 1px solid #CCCCCC;
+    border-radius: 0;
+    font-family: inherit;
+    background: #fff;
+    color: #0A0A0A;
+  }
+  input[type="text"]:focus, input[type="date"]:focus, textarea:focus {
+    outline: none;
+    border-color: #0A0A0A;
+  }
+  textarea { min-height: 60px; resize: vertical; }
+
+  /* Draft restore notice */
+  .draft-notice {
+    font-size: 12px;
+    background: #F4F4F4;
+    border-left: 3px solid #0A0A0A;
+    padding: 9px 10px;
+    margin-bottom: 16px;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .draft-notice button {
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #0A0A0A;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  /* Step progress — signature element: checkpoint track */
+  .step-counter {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #555555;
+    margin-bottom: 8px;
+  }
+  .progress-track {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 22px;
+  }
+  .progress-track .checkpoint {
+    flex: 1;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    background: #F4F4F4;
+    border: 1px solid #CCCCCC;
+    opacity: 0.4;
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+  .progress-track .checkpoint.current {
+    background: #0A0A0A;
+    border-color: #0A0A0A;
+    opacity: 1;
+    animation: pulseCurrent 1.6s ease-in-out infinite;
+  }
+  @keyframes pulseCurrent {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(10,10,10,0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(10,10,10,0); }
+  }
+  .progress-track .checkpoint.done {
+    background: #E8FF47;
+    border-color: #0A0A0A;
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  section.qsection {
+    background: #fff;
+    border: 1px solid #111111;
+    border-radius: 0;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    display: none;
+  }
+  section.qsection.active-step {
+    display: block;
+    animation: stepIn 0.25s ease;
+  }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateX(14px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  section.qsection h2 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0A0A0A;
+  }
+
+  .question { margin-bottom: 14px; }
+  .question > p {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+  }
+  .question .hint {
+    font-weight: 400;
+    color: #666;
+    font-size: 12.5px;
+  }
+  .question.conditional {
+    margin-left: 14px;
+    padding-left: 10px;
+    border-left: 2px solid #CCCCCC;
+    overflow: hidden;
+    max-height: 300px;
+    opacity: 1;
+    transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease, padding 0.25s ease;
+  }
+  .question.conditional[style*="display: none"] {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .radio-group, .check-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .radio-group label, .check-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    background: #F4F4F4;
+    border: 1px solid #F4F4F4;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .radio-group label:has(input:checked), .check-group label:has(input:checked) {
+    background: #E8FF47;
+    border-color: #0A0A0A;
+    color: #0A0A0A;
+    font-weight: 700;
+    animation: pop 0.22s ease;
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.07); }
+    100% { transform: scale(1); }
+  }
+  .radio-group input, .check-group input { margin: 0; }
+
+  #resultado-section { background: #E8FF47; border-color: #0A0A0A; }
+  #resultado-section h2 { border-bottom-color: #0A0A0A; }
+  #resultado-section .radio-group label { background: #FFFFFF; }
+  #resultado-section .radio-group label:has(input:checked) { background: #0A0A0A; color: #E8FF47; border-color: #0A0A0A; }
+
+  .bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: #FFFFFF;
+    border-top: 2px solid #0A0A0A;
+    padding: 12px 0;
+    margin-top: 4px;
+    display: flex;
+    gap: 10px;
+  }
+  .bottom-nav button {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+  }
+  .bottom-nav .hidden { display: none !important; }
+  .bottom-nav button, button#submitBtn { transition: transform 0.1s ease, opacity 0.15s ease; }
+  .bottom-nav button:active { transform: scale(0.96); }
+  #prevBtn { background: #F4F4F4; color: #0A0A0A; border: 1px solid #0A0A0A; flex: 0 0 110px; }
+  #prevBtn:disabled { opacity: 0.3; cursor: default; }
+  #nextBtn { background: #0A0A0A; color: #FFFFFF; }
+  #nextBtn:hover { opacity: 0.85; }
+  #submitBtn { background: #E8FF47; color: #0A0A0A; }
+  #submitBtn:hover { opacity: 0.85; }
+  #submitBtn:disabled { opacity: 0.5; }
+
+  .spinner {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(10,10,10,0.25);
+    border-top-color: #0A0A0A;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: -2px;
+    animation: spin 0.6s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #status {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 0;
+    font-size: 14px;
+    display: none;
+  }
+  #status.ok { display: block; background: #e3f6e5; color: #1a5c25; animation: slideIn 0.25s ease; }
+  #status.err { display: block; background: #fbe4e4; color: #7a1f1f; animation: slideIn 0.25s ease; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  *:focus-visible { outline: 2px solid #0A0A0A; outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    section.qsection.active-step { animation: none; }
+    .question.conditional, .progress-track .checkpoint, .radio-group label, .check-group label { transition: none; }
+    .progress-track .checkpoint.current, .radio-group label:has(input:checked), .check-group label:has(input:checked),
+    #status.ok, #status.err, .spinner { animation: none; }
+    .bottom-nav button:active { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-logo">
+  <div class="brand-mark">K</div>
+  <div class="brand-word">Project Krato</div>
+</div>
+
+<div class="title-banner">
+  <h1>Discovery digital — Victoria Specialty Coffee</h1>
+</div>
+
+<div class="meta-row">
+  <div>
+    <label class="field-label">Empresa</label>
+    <input type="text" id="empresa" value="Cafeteria Victoria">
+  </div>
+  <div>
+    <label class="field-label">Fecha</label>
+    <input type="date" id="fecha">
+  </div>
+</div>
+
+<div class="draft-notice" id="draftNotice">
+  <span>Borrador restaurado de una sesión anterior.</span>
+  <button type="button" id="discardDraft">Descartar y empezar de nuevo</button>
+</div>
+
+<div class="step-counter" id="stepCounter">Paso 1 de 6 — Apertura</div>
+<div class="progress-track" id="progressTrack">
+  <div class="checkpoint" data-step-target="0">🔑</div>
+  <div class="checkpoint" data-step-target="1">🗂️</div>
+  <div class="checkpoint" data-step-target="2">📣</div>
+  <div class="checkpoint" data-step-target="3">💰</div>
+  <div class="checkpoint" data-step-target="4">🛵</div>
+  <div class="checkpoint" data-step-target="5">✅</div>
+</div>
+
+<section class="qsection" data-section="Apertura" data-step="0">
+  <h2>🔑 Apertura</h2>
+
+  <div class="question" data-q="¿Eres el dueño del negocio?">
+    <p>¿Eres el dueño del negocio?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="apertura_dueno" value="Sí"> Sí</label>
+      <label><input type="radio" name="apertura_dueno" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Qué puesto tienes?" data-depends="apertura_dueno:No">
+    <p>Si no: ¿qué puesto tienes?</p>
+    <input type="text" name="apertura_puesto">
+  </div>
+
+  <div class="question" data-q="¿Qué te hizo buscar ayuda con esto justo ahora?">
+    <p>¿Qué te hizo buscar ayuda con esto justo ahora?</p>
+    <textarea name="apertura_porque_ahora"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo se relaciona Victoria con Mono Rojo Coffee Company?">
+    <p>¿Cómo se relaciona Victoria con Mono Rojo Coffee Company? <span class="hint">(¿misma dueña, marca hermana, alianza de espacio?)</span></p>
+    <textarea name="apertura_monorojo"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cuánto tiempo llevan operando?">
+    <p>¿Cuánto tiempo llevan operando?</p>
+    <input type="text" name="apertura_tiempo">
+  </div>
+
+  <div class="question" data-q="¿Quién más del negocio está involucrado en las decisiones de estas 4 áreas?">
+    <p>¿Quién más del negocio está involucrado en las decisiones de estas 4 áreas?</p>
+    <textarea name="apertura_decisiones"></textarea>
+  </div>
+</section>
+
+<section class="qsection" data-section="Admin" data-step="1">
+  <h2>🗂️ Admin</h2>
+
+  <div class="question" data-q="¿Cómo llevan hoy el control de inventario?">
+    <p>¿Cómo llevan hoy el control de inventario (café, leche, insumos, empaques)? <span class="hint">¿Excel, papel, app?</span></p>
+    <textarea name="admin_inventario"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo controlan costos y márgenes por producto?">
+    <p>¿Cómo controlan costos y márgenes por producto? <span class="hint">¿Saben cuál es su producto más/menos rentable?</span></p>
+    <textarea name="admin_costos"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo manejan nómina, turnos y asistencia del personal?">
+    <p>¿Cómo manejan nómina, turnos y asistencia del personal?</p>
+    <textarea name="admin_nomina"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Tienen algún reporte diario/semanal de cierre de caja?">
+    <p>¿Tienen algún reporte diario/semanal de cierre de caja?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="admin_reporte_caja" value="Sí"> Sí</label>
+      <label><input type="radio" name="admin_reporte_caja" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Quién revisa el reporte de caja y qué hace con esa info?" data-depends="admin_reporte_caja:Sí">
+    <p>¿Quién lo revisa y qué hace con esa info?</p>
+    <textarea name="admin_reporte_caja_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Qué tan seguido hay discrepancias de caja o inventario fantasma?">
+    <p>¿Qué tan seguido hay discrepancias de caja o inventario "fantasma"?</p>
+    <textarea name="admin_discrepancias"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Usan algún POS?">
+    <p>¿Usan algún POS?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="admin_pos" value="Sí"> Sí</label>
+      <label><input type="radio" name="admin_pos" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuál POS? ¿Conformes con él?" data-depends="admin_pos:Sí">
+    <p>¿Cuál? ¿Están conformes con él?</p>
+    <textarea name="admin_pos_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Qué usan para pagos y facturación?">
+    <p>¿Qué usan para pagos y facturación? <span class="hint">terminal, CFDI, facturación manual — ¿es un dolor o ya está resuelto?</span></p>
+    <textarea name="admin_pagos"></textarea>
+  </div>
+</section>
+
+<section class="qsection" data-section="Marketing" data-step="2">
+  <h2>📣 Marketing</h2>
+
+  <div class="question" data-q="¿Quién produce el contenido de Instagram?">
+    <p>¿Quién produce el contenido de Instagram? <span class="hint">dueño, empleado, agencia</span></p>
+    <textarea name="marketing_quien_produce"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Tienen calendario de contenido?">
+    <p>¿Tienen calendario de contenido o publican "cuando se puede"?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="marketing_calendario" value="Sí, tienen calendario"> Sí</label>
+      <label><input type="radio" name="marketing_calendario" value="No, publican cuando se puede"> No</label>
+    </div>
+  </div>
+
+  <div class="question" data-q="¿Miden qué tipo de post genera más visitas/pedidos reales?">
+    <p>¿Miden qué tipo de post genera más visitas/pedidos reales? <span class="hint">no solo likes</span></p>
+    <div class="radio-group">
+      <label><input type="radio" name="marketing_mide_posts" value="Sí"> Sí</label>
+      <label><input type="radio" name="marketing_mide_posts" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuál tipo de post genera más?" data-depends="marketing_mide_posts:Sí">
+    <p>¿Cuál tipo genera más?</p>
+    <textarea name="marketing_mide_posts_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Qué canales de marketing usan?">
+    <p>¿Hacen algo de WhatsApp marketing, email, o solo redes sociales?</p>
+    <div class="check-group">
+      <label><input type="checkbox" name="marketing_canales" value="WhatsApp marketing"> WhatsApp marketing</label>
+      <label><input type="checkbox" name="marketing_canales" value="Email"> Email</label>
+      <label><input type="checkbox" name="marketing_canales" value="Solo redes sociales"> Solo redes sociales</label>
+    </div>
+  </div>
+
+  <div class="question" data-q="¿Tienen base de datos de clientes?">
+    <p>¿Tienen base de datos de clientes? <span class="hint">aunque sea básica</span></p>
+    <div class="radio-group">
+      <label><input type="radio" name="marketing_bd_clientes" value="Sí"> Sí</label>
+      <label><input type="radio" name="marketing_bd_clientes" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Dónde tienen la base de datos de clientes?" data-depends="marketing_bd_clientes:Sí">
+    <p>¿Dónde la tienen? <span class="hint">Excel, CRM, papel...</span></p>
+    <textarea name="marketing_bd_clientes_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo consiguen nuevos clientes hoy?">
+    <p>¿Cómo consiguen nuevos clientes hoy?</p>
+    <div class="check-group">
+      <label><input type="checkbox" name="marketing_adquisicion" value="Orgánico"> Orgánico</label>
+      <label><input type="checkbox" name="marketing_adquisicion" value="Pauta"> Pauta</label>
+      <label><input type="checkbox" name="marketing_adquisicion" value="Boca a boca"> Boca a boca</label>
+      <label><input type="checkbox" name="marketing_adquisicion" value="Ubicación"> Ubicación</label>
+    </div>
+  </div>
+
+  <div class="question" data-q="¿Quién genera las ideas de contenido y cuál es el proceso de principio a fin?">
+    <p>¿Quién genera las ideas de contenido y cuál es el proceso de principio a fin? <span class="hint">de la idea a la publicación</span></p>
+    <textarea name="marketing_proceso_ideas"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Corren pauta paga (ads)?">
+    <p>¿Corren pauta paga (ads en Meta/Instagram/Google)?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="marketing_ads" value="Sí"> Sí</label>
+      <label><input type="radio" name="marketing_ads" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Quién arma, ejecuta y decide presupuesto de ads?" data-depends="marketing_ads:Sí">
+    <p>¿Quién la arma, ejecuta y decide el presupuesto?</p>
+    <textarea name="marketing_ads_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo y dónde almacenan su material?">
+    <p>¿Cómo y dónde almacenan su material (fotos, videos, diseños)? <span class="hint">Google Drive, celular, en la nube, desordenado</span></p>
+    <textarea name="marketing_almacenamiento"></textarea>
+  </div>
+</section>
+
+<section class="qsection" data-section="Ventas" data-step="3">
+  <h2>💰 Ventas</h2>
+
+  <div class="question" data-q="¿Cómo se toman los pedidos en local?">
+    <p>¿Cómo se toman los pedidos en local? <span class="hint">mostrador, QR, app propia</span></p>
+    <textarea name="ventas_pedidos"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Tienen upselling estructurado?">
+    <p>¿Tienen upselling estructurado <span class="hint">(ej. "¿le agregamos un shot extra?")</span> o es improvisado por barista?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_upselling" value="Sí, estructurado"> Sí</label>
+      <label><input type="radio" name="ventas_upselling" value="No, improvisado"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cómo está estructurado el upselling?" data-depends="ventas_upselling:Sí, estructurado">
+    <p>¿Cómo está estructurado?</p>
+    <textarea name="ventas_upselling_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Manejan algún programa de lealtad/recurrencia?">
+    <p>¿Manejan algún programa de lealtad/recurrencia?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_lealtad" value="Sí"> Sí</label>
+      <label><input type="radio" name="ventas_lealtad" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuál programa de lealtad?" data-depends="ventas_lealtad:Sí">
+    <p>¿Cuál?</p>
+    <textarea name="ventas_lealtad_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Saben cuál es su ticket promedio?">
+    <p>¿Saben cuál es su ticket promedio? <span class="hint">¿Y su tasa de clientes recurrentes vs. nuevos?</span></p>
+    <textarea name="ventas_ticket"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Hay temporadas/horarios muertos que les gustaría activar?">
+    <p>¿Hay temporadas/horarios muertos que les gustaría activar?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_horarios_muertos" value="Sí"> Sí</label>
+      <label><input type="radio" name="ventas_horarios_muertos" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuáles horarios/temporadas muertas?" data-depends="ventas_horarios_muertos:Sí">
+    <p>¿Cuáles?</p>
+    <textarea name="ventas_horarios_muertos_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Usan algún CRM?">
+    <p>¿Usan algún CRM?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_crm" value="Sí"> Sí</label>
+      <label><input type="radio" name="ventas_crm" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuál CRM?" data-depends="ventas_crm:Sí">
+    <p>¿Cuál?</p>
+    <textarea name="ventas_crm_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Usan algún ERP?">
+    <p>¿Usan algún ERP?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_erp" value="Sí"> Sí</label>
+      <label><input type="radio" name="ventas_erp" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cuál ERP?" data-depends="ventas_erp:Sí">
+    <p>¿Cuál?</p>
+    <textarea name="ventas_erp_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Tienen algún SOP (proceso de ventas documentado)?">
+    <p>¿Tienen algún SOP (proceso de ventas documentado), o es venta sin estructura?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="ventas_sop" value="Sí, documentado"> Sí</label>
+      <label><input type="radio" name="ventas_sop" value="No, sin estructura"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Nos comparten o resumen el SOP?" data-depends="ventas_sop:Sí, documentado">
+    <p>¿Podrías compartirlo o resumirlo?</p>
+    <textarea name="ventas_sop_detalle"></textarea>
+  </div>
+</section>
+
+<section class="qsection" data-section="Delivery" data-step="4">
+  <h2>🛵 Delivery</h2>
+
+  <div class="question" data-q="¿Trabajan con apps de terceros, delivery propio, o ambos?">
+    <p>¿Trabajan con apps <span class="hint">(Rappi, Uber Eats, DiDi Food)</span> o delivery propio?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="delivery_modelo" value="Apps de terceros"> Apps de terceros</label>
+      <label><input type="radio" name="delivery_modelo" value="Delivery propio"> Delivery propio</label>
+      <label><input type="radio" name="delivery_modelo" value="Ambos"> Ambos</label>
+      <label><input type="radio" name="delivery_modelo" value="No hacen delivery"> No hacen delivery</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="Si es por apps: % de venta y comisión" data-depends="delivery_modelo:Apps de terceros,Ambos">
+    <p>¿Qué % de su venta representa y qué tanto se come la comisión el margen?</p>
+    <textarea name="delivery_pct_comision"></textarea>
+  </div>
+
+  <div class="question conditional" data-q="¿Tienen datos del % de pedidos por apps de terceros vs. propios?" data-depends="delivery_modelo:Apps de terceros,Ambos">
+    <p>¿Tienen datos del % de pedidos que pasan por apps de terceros vs. propios? <span class="hint">para identificar qué tan dependientes son</span></p>
+    <textarea name="delivery_dependencia"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Cómo gestionan pedidos de delivery en horas pico?">
+    <p>¿Cómo gestionan pedidos de delivery en horas pico sin que se choque con el flujo del local?</p>
+    <textarea name="delivery_horas_pico"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Han medido tiempos de entrega, quejas, o pedidos cancelados/mal armados?">
+    <p>¿Han medido tiempos de entrega, quejas, o pedidos cancelados/mal armados?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="delivery_medicion" value="Sí"> Sí</label>
+      <label><input type="radio" name="delivery_medicion" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Qué encontraron al medir tiempos/quejas?" data-depends="delivery_medicion:Sí">
+    <p>¿Qué encontraron?</p>
+    <textarea name="delivery_medicion_detalle"></textarea>
+  </div>
+
+  <div class="question" data-q="¿Tienen pedidos por WhatsApp directo?">
+    <p>¿Tienen pedidos por WhatsApp directo?</p>
+    <div class="radio-group">
+      <label><input type="radio" name="delivery_whatsapp" value="Sí"> Sí</label>
+      <label><input type="radio" name="delivery_whatsapp" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question conditional" data-q="¿Cómo se procesan los pedidos por WhatsApp?" data-depends="delivery_whatsapp:Sí">
+    <p>¿Cómo se procesan? <span class="hint">manual, alguien contesta, bot</span></p>
+    <textarea name="delivery_whatsapp_detalle"></textarea>
+  </div>
+</section>
+
+<section class="qsection" id="resultado-section" data-step="5">
+  <h2>Resultado de la plática</h2>
+  <div class="radio-group">
+    <label><input type="radio" name="resultado" value="Interesado"> Interesado</label>
+    <label><input type="radio" name="resultado" value="No interesado"> No interesado</label>
+  </div>
+</section>
+
+<div class="bottom-nav">
+  <button type="button" id="prevBtn">← Atrás</button>
+  <button type="button" id="nextBtn">Siguiente →</button>
+  <button type="button" id="submitBtn" class="hidden">Enviar respuestas</button>
+</div>
+<div id="status"></div>
+
+<script>
+  // Webhook de n8n: "Discovery → Airtable CRM" (activo).
+  const WEBHOOK_URL = "https://projectkrato-n8n.y4pkfy.easypanel.host/webhook/discovery-form";
+  const DRAFT_KEY = "krato_discovery_draft_victoria";
+
+  const steps = Array.from(document.querySelectorAll('section.qsection[data-step]'))
+    .sort(function (a, b) { return Number(a.dataset.step) - Number(b.dataset.step); });
+  const stepNames = steps.map(function (s) { return s.dataset.section || 'Resultado'; });
+  let currentStep = 0;
+
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById('fecha').value = today;
+
+  function updateConditionals() {
+    document.querySelectorAll('.question.conditional[data-depends]').forEach(function (el) {
+      const sep = el.dataset.depends.indexOf(':');
+      const field = el.dataset.depends.slice(0, sep);
+      const values = el.dataset.depends.slice(sep + 1).split(',');
+      const checked = document.querySelector('input[name="' + field + '"]:checked');
+      el.style.display = (checked && values.indexOf(checked.value) !== -1) ? 'block' : 'none';
+    });
+  }
+
+  function isVisible(el) {
+    const conditional = el.closest('.question.conditional');
+    return !conditional || conditional.style.display !== 'none';
+  }
+
+  function collectAnswers() {
+    const payload = {};
+    const names = new Set();
+    document.querySelectorAll('section.qsection [name]').forEach(function (el) { names.add(el.name); });
+
+    names.forEach(function (name) {
+      const els = document.getElementsByName(name);
+      const first = els[0];
+      if (!isVisible(first)) {
+        payload[name] = (first.type === 'checkbox') ? [] : '';
+        return;
+      }
+      if (first.type === 'radio') {
+        const checked = document.querySelector('input[name="' + name + '"]:checked');
+        payload[name] = checked ? checked.value : '';
+      } else if (first.type === 'checkbox') {
+        payload[name] = Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (c) { return c.value; });
+      } else {
+        payload[name] = first.value.trim();
+      }
+    });
+    return payload;
+  }
+
+  function renderStep() {
+    steps.forEach(function (s) {
+      s.classList.toggle('active-step', Number(s.dataset.step) === currentStep);
+    });
+    document.querySelectorAll('.progress-track .checkpoint').forEach(function (cp) {
+      const idx = Number(cp.dataset.stepTarget);
+      cp.classList.remove('current', 'done');
+      if (idx === currentStep) cp.classList.add('current');
+      else if (idx < currentStep) cp.classList.add('done');
+    });
+    document.getElementById('stepCounter').textContent =
+      'Paso ' + (currentStep + 1) + ' de ' + steps.length + ' — ' + stepNames[currentStep];
+    document.getElementById('prevBtn').disabled = currentStep === 0;
+    document.getElementById('nextBtn').classList.toggle('hidden', currentStep === steps.length - 1);
+    document.getElementById('submitBtn').classList.toggle('hidden', currentStep !== steps.length - 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToStep(n) {
+    if (n < 0 || n >= steps.length) return;
+    currentStep = n;
+    renderStep();
+    saveDraft();
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function () { goToStep(currentStep - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function () { goToStep(currentStep + 1); });
+  document.querySelectorAll('.progress-track .checkpoint').forEach(function (cp) {
+    cp.addEventListener('click', function () {
+      const idx = Number(cp.dataset.stepTarget);
+      if (idx <= currentStep) goToStep(idx);
+    });
+  });
+
+  function saveDraft() {
+    const data = collectAnswers();
+    data.__empresa = document.getElementById('empresa').value;
+    data.__fecha = document.getElementById('fecha').value;
+    const resultadoEl = document.querySelector('input[name=resultado]:checked');
+    data.__resultado = resultadoEl ? resultadoEl.value : '';
+    data.__step = currentStep;
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+  }
+
+  function restoreDraft() {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return;
+    let data;
+    try { data = JSON.parse(raw); } catch (e) { return; }
+    if (!data || typeof data !== 'object') return;
+
+    if (data.__empresa) document.getElementById('empresa').value = data.__empresa;
+    if (data.__fecha) document.getElementById('fecha').value = data.__fecha;
+
+    Object.keys(data).forEach(function (name) {
+      if (name.indexOf('__') === 0) return;
+      const els = document.getElementsByName(name);
+      if (!els.length) return;
+      const val = data[name];
+      if (els[0].type === 'radio') {
+        const match = document.querySelector('input[name="' + name + '"][value="' + CSS.escape(val) + '"]');
+        if (match) match.checked = true;
+      } else if (els[0].type === 'checkbox') {
+        (val || []).forEach(function (v) {
+          const match = document.querySelector('input[name="' + name + '"][value="' + CSS.escape(v) + '"]');
+          if (match) match.checked = true;
+        });
+      } else {
+        els[0].value = val;
+      }
+    });
+
+    if (data.__resultado) {
+      const r = document.querySelector('input[name=resultado][value="' + CSS.escape(data.__resultado) + '"]');
+      if (r) r.checked = true;
+    }
+
+    currentStep = Number(data.__step) || 0;
+    document.getElementById('draftNotice').style.display = 'flex';
+  }
+
+  document.getElementById('discardDraft').addEventListener('click', function () {
+    localStorage.removeItem(DRAFT_KEY);
+    location.reload();
+  });
+
+  document.addEventListener('change', function () { updateConditionals(); saveDraft(); });
+  document.addEventListener('input', saveDraft);
+
+  restoreDraft();
+  updateConditionals();
+  renderStep();
+
+  document.getElementById('submitBtn').addEventListener('click', function () {
+    const statusEl = document.getElementById('status');
+    const btn = this;
+
+    const empresa = document.getElementById('empresa').value.trim();
+    const fecha = document.getElementById('fecha').value;
+    const resultadoEl = document.querySelector('input[name=resultado]:checked');
+    const resultado = resultadoEl ? resultadoEl.value : '';
+
+    if (!empresa) {
+      statusEl.className = 'err';
+      statusEl.textContent = 'Falta el nombre de la empresa.';
+      return;
+    }
+
+    const payload = Object.assign(
+      { empresa: empresa, fecha: fecha, resultado: resultado },
+      collectAnswers()
+    );
+
+    const originalLabel = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Enviando...';
+    statusEl.className = '';
+    statusEl.style.display = 'none';
+
+    fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function () {
+        statusEl.className = 'ok';
+        statusEl.textContent = 'Enviado correctamente al CRM.';
+        localStorage.removeItem(DRAFT_KEY);
+      })
+      .catch(function (err) {
+        statusEl.className = 'err';
+        statusEl.textContent = 'Error al enviar: ' + err.message + '. Intenta de nuevo.';
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+      });
+  });
+</script>
+
+</body>
+</html>
