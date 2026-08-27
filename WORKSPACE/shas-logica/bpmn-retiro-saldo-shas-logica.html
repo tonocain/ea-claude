@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Retiro de saldo · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --red:#dc2626;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1300px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .note{
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+    font-size:12.5px;
+    color:#333;
+    line-height:1.5;
+    margin-bottom:20px;
+  }
+  .note strong{color:var(--black);}
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — RETIRO DE SALDO · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo funciona hoy el retiro de saldo, no cómo debería ser.
+  </div>
+
+  <div class="note">
+    <strong>Nota de lectura:</strong> este proceso tiene dos caminos de entrada distintos (por app y por llamada telefónica con ayuda de Admin) que convergen en la misma lógica de Backend / Stripe Connect. Ambos caminos comparten un solo evento de fin exitoso.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin — éxito
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Evento de fin — descarte
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2400 790" width="2400" height="790" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2380" height="770" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Usuario -->
+      <rect x="54" y="10" width="2336" height="220" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="220" fill="#111111"/>
+      <text x="32" y="120" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 120)">🏢 USUARIO</text>
+
+      <!-- Lane 2: Admin -->
+      <rect x="54" y="230" width="2336" height="170" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="230" width="44" height="170" fill="#0A0A0A"/>
+      <text x="32" y="315" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 315)">👤 ADMIN</text>
+
+      <!-- Lane 3: Backend (sistema) -->
+      <rect x="54" y="400" width="2336" height="240" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="400" width="44" height="240" fill="#6b6b6b"/>
+      <text x="32" y="520" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 520)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- Lane 4: Stripe Connect (externo) -->
+      <rect x="54" y="640" width="2336" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="640" width="44" height="140" fill="#111111"/>
+      <text x="32" y="710" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 710)">🏢 STRIPE CONNECT (EXTERNO)</text>
+
+      <!-- ===================== CAMINO A: POR APP (Usuario, fila superior) ===================== -->
+
+      <!-- Start A -->
+      <circle cx="120" cy="70" r="26" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="120" y="74" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10.5" fill="#111111" text-anchor="middle">Inicio</text>
+
+      <line x1="146" y1="70" x2="215" y2="70" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- A1 -->
+      <rect x="215" y="25" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="310" y="60" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="310" dy="0">Usuario entra a la app</tspan>
+        <tspan x="310" dy="13">y ve su saldo</tspan>
+        <tspan x="310" dy="13">disponible</tspan>
+      </text>
+
+      <line x1="405" y1="70" x2="435" y2="70" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- A2 -->
+      <rect x="435" y="25" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="530" y="52" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="530" dy="0">Usuario presiona</tspan>
+        <tspan x="530" dy="13">"retirar" e indica el</tspan>
+        <tspan x="530" dy="13">monto (parcial permitido,</tspan>
+        <tspan x="530" dy="13">mínimo $1,000 MXN)</tspan>
+      </text>
+
+      <!-- A2 -> D1 (cross-lane handoff into Backend, curved, routed clear of Admin lane boxes) -->
+      <path d="M530,115 C925,115 925,450 925,450" fill="none" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- ===================== CAMINO B: POR LLAMADA (Usuario fila inferior -> Admin) ===================== -->
+
+      <!-- Start B -->
+      <circle cx="120" cy="175" r="26" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="120" y="179" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10.5" fill="#111111" text-anchor="middle">Inicio</text>
+
+      <line x1="146" y1="175" x2="215" y2="175" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- C1 -->
+      <rect x="215" y="130" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="310" y="165" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="310" dy="0">Usuario sin internet</tspan>
+        <tspan x="310" dy="13">llama pidiendo</tspan>
+        <tspan x="310" dy="13">retirar</tspan>
+      </text>
+
+      <!-- C1 -> C2 (cross-lane, diagonal) -->
+      <line x1="310" y1="220" x2="530" y2="270" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- C2 -->
+      <rect x="435" y="270" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="530" y="305" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="530" dy="0">Admin busca el saldo</tspan>
+        <tspan x="530" dy="13">disponible del usuario</tspan>
+        <tspan x="530" dy="13">en el panel</tspan>
+      </text>
+
+      <line x1="625" y1="315" x2="655" y2="315" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- C3 -->
+      <rect x="655" y="270" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="750" y="297" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="750" dy="0">Si cumple el mínimo,</tspan>
+        <tspan x="750" dy="13">admin inicia el retiro</tspan>
+        <tspan x="750" dy="13">a nombre del usuario</tspan>
+        <tspan x="750" dy="13">desde su panel</tspan>
+      </text>
+
+      <!-- C3 -> D1 (cross-lane handoff into Backend) -->
+      <line x1="750" y1="360" x2="875" y2="497" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- ===================== LÓGICA COMPARTIDA: BACKEND / STRIPE CONNECT ===================== -->
+
+      <!-- D1: monto cumple minimo -->
+      <text x="925" y="405" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="925" dy="0">¿Monto solicitado cumple</tspan>
+        <tspan x="925" dy="13">el mínimo de $1,000 MXN?</tspan>
+      </text>
+      <polygon points="925,450 975,500 925,550 875,500" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="925" y="505" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- Friction marker 1 near D1 -->
+      <circle cx="1002" cy="428" r="12" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1002" y="432" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- D1 No -> end discard -->
+      <line x1="925" y1="550" x2="925" y2="574" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="940" y="566" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+      <circle cx="925" cy="600" r="26" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="925" y="605" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="960" y="593" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666">
+        <tspan x="960" dy="0">No se permite continuar;</tspan>
+        <tspan x="960" dy="12">monto no alcanza el mínimo.</tspan>
+      </text>
+
+      <!-- D1 Sí -> verifica cuenta Stripe -->
+      <line x1="975" y1="500" x2="1005" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="990" y="487" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- verifica-stripe -->
+      <rect x="1005" y="455" width="210" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1110" y="480" font-family="Trebuchet MS, Arial, sans-serif" font-size="9" fill="#111111" text-anchor="middle">
+        <tspan x="1110" dy="0">Backend verifica que</tspan>
+        <tspan x="1110" dy="11">tenga Stripe Connect</tspan>
+        <tspan x="1110" dy="11">conectado; si no existe,</tspan>
+        <tspan x="1110" dy="11">intenta crearla con su</tspan>
+        <tspan x="1110" dy="11">CLABE registrada</tspan>
+      </text>
+
+      <line x1="1215" y1="500" x2="1245" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D2: cuenta Stripe se creó/existe -->
+      <text x="1295" y="413" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1295" dy="0">¿La cuenta de Stripe</tspan>
+        <tspan x="1295" dy="13">Connect se creó/existe</tspan>
+        <tspan x="1295" dy="13">correctamente?</tspan>
+      </text>
+      <polygon points="1295,450 1345,500 1295,550 1245,500" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1295" y="505" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D2 No -> end discard -->
+      <line x1="1295" y1="550" x2="1295" y2="574" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1310" y="566" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+      <circle cx="1295" cy="600" r="26" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="1295" y="605" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="1330" y="581" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666">
+        <tspan x="1330" dy="0">CLABE inválida/rechazada:</tspan>
+        <tspan x="1330" dy="12">usuario ve error específico y</tspan>
+        <tspan x="1330" dy="12">queda bloqueado hasta corregir</tspan>
+        <tspan x="1330" dy="12">su CLABE en su perfil.</tspan>
+      </text>
+
+      <!-- D2 Sí -> marca en proceso -->
+      <line x1="1345" y1="500" x2="1375" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1360" y="487" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- marca-proceso -->
+      <rect x="1375" y="455" width="210" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1480" y="480" font-family="Trebuchet MS, Arial, sans-serif" font-size="9" fill="#111111" text-anchor="middle">
+        <tspan x="1480" dy="0">Backend marca el monto</tspan>
+        <tspan x="1480" dy="11">como "retiro en proceso"</tspan>
+        <tspan x="1480" dy="11">(no se resta aún, pero</tspan>
+        <tspan x="1480" dy="11">se congela para evitar</tspan>
+        <tspan x="1480" dy="11">otro retiro simultáneo)</tspan>
+      </text>
+      <!-- Friction marker 2 -->
+      <circle cx="1595" cy="448" r="12" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1595" y="452" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#111111" text-anchor="middle">2</text>
+
+      <line x1="1585" y1="500" x2="1615" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- solicita-transferencia -->
+      <rect x="1615" y="455" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1710" y="493" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1710" dy="0">Backend solicita la</tspan>
+        <tspan x="1710" dy="13">transferencia a</tspan>
+        <tspan x="1710" dy="13">Stripe Connect</tspan>
+      </text>
+
+      <!-- solicita-transferencia -> Stripe task (down, handoff to external lane) -->
+      <line x1="1710" y1="545" x2="1710" y2="665" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Stripe task -->
+      <rect x="1605" y="665" width="210" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1710" y="700" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1710" dy="0">Stripe Connect procesa</tspan>
+        <tspan x="1710" dy="13">la transferencia y</tspan>
+        <tspan x="1710" dy="13">responde éxito/falla</tspan>
+      </text>
+
+      <!-- Stripe task -> D3 (up, response back into Backend) -->
+      <path d="M1795,665 C1870,640 1870,550 1835,500" fill="none" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D3: Stripe confirma transferencia -->
+      <text x="1885" y="413" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1885" dy="0">¿Stripe confirma</tspan>
+        <tspan x="1885" dy="13">la transferencia?</tspan>
+      </text>
+      <polygon points="1885,450 1935,500 1885,550 1835,500" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1885" y="505" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D3 No -> end discard -->
+      <line x1="1885" y1="550" x2="1885" y2="574" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1900" y="566" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+      <circle cx="1885" cy="600" r="26" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="1885" y="605" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="1920" y="581" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666">
+        <tspan x="1920" dy="0">Saldo vuelve a estar disponible</tspan>
+        <tspan x="1920" dy="12">(se libera lo congelado); se avisa</tspan>
+        <tspan x="1920" dy="12">al usuario que el retiro falló y</tspan>
+        <tspan x="1920" dy="12">puede reintentar.</tspan>
+      </text>
+
+      <!-- D3 Sí -> resta saldo final -->
+      <line x1="1935" y1="500" x2="1965" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1950" y="487" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- final task -->
+      <rect x="1965" y="455" width="190" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="2060" y="480" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="2060" dy="0">Se resta el saldo de</tspan>
+        <tspan x="2060" dy="13">forma definitiva y se</tspan>
+        <tspan x="2060" dy="13">registra en transacciones</tspan>
+        <tspan x="2060" dy="13">y log_usuarios</tspan>
+      </text>
+
+      <line x1="2155" y1="500" x2="2195" y2="500" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END success (shared) -->
+      <circle cx="2223" cy="500" r="28" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="2223" y="505" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="2223" y="548" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="2223" dy="0">Saldo restado de forma definitiva,</tspan>
+        <tspan x="2223" dy="12">transferido vía Stripe Connect a la</tspan>
+        <tspan x="2223" dy="12">CLABE del usuario; registrado en</tspan>
+        <tspan x="2223" dy="12">transacciones y log_usuarios.</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>El mínimo de $1,000 MXN existe por el costo fijo de comisión de Stripe por transferencia — es una decisión de negocio, no técnica, y limita a usuarios con saldo pequeño.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>El monto "congelado" durante el proceso evita retiros duplicados simultáneos, pero depende de que ese estado intermedio se maneje correctamente.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
