@@ -23,6 +23,7 @@ Solicitud queda "abierta" en el sistema, con todas las partes (Masejtot) del cat
 6. Backend consulta el catálogo de Masejtot correspondiente al tipo elegido y genera todas las partes disponibles | Responsible: Backend | Type: automatic-service
 7. Backend confirma la solicitud como "abierta" (solo si el paso 6 fue exitoso) | Responsible: Backend | Type: automatic-service
 8. App muestra pantalla de éxito (tipo de Shas, monto, dedicatoria) y envía confirmación por WhatsApp/SMS; Stripe manda su propio recibo de pago por separado | Responsible: App | Type: automatic-service
+9. Backend dispara, en el mismo momento, un SMS masivo automático a todos los usuarios verificados avisando que hay una solicitud nueva (esto es lo que permite que un usuario sin internet se entere y pueda tomar una parte por llamada — ver flujo "Usuario toma una parte por llamada") | Responsible: Backend | Type: automatic-service
 
 ## Decisions
 - Después del paso 5: ¿Stripe aprueba el pago? → Si no: nada se guarda en la base, el donador ve un mensaje de error (tarjeta rechazada, fondos insuficientes, etc.) y puede reintentar sin límite de intentos; no se crea ningún registro. → Si sí: continúa al paso 6.
@@ -35,6 +36,7 @@ Solicitud queda "abierta" en el sistema, con todas las partes (Masejtot) del cat
 - 🔵 Sin fecha límite, la solicitud puede quedar "abierta" indefinidamente sin ningún mecanismo de seguimiento automático (hasta que exista el flujo de vencimiento, que solo cubre las que sí tienen fecha).
 
 ## Notes
+- El SMS masivo a usuarios verificados (paso 9) solo llega a quienes ya están verificados (flujo 6).
 - Catálogos de Mishná y Guemará son independientes entre sí: distinta cantidad de Masejtot y distinto precio fijo cada uno.
 - El administrador no participa en este flujo puntual — su intervención empieza después, en verificación de usuarios o en el registro de tomas por llamada.
 - Este es el primero de una serie de flujos relacionados que el cliente irá entregando. El flujo de "vencimiento de solicitud" depende de este (solo aplica a solicitudes con fecha límite).
