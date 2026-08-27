@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Vencimiento de una solicitud · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — VENCIMIENTO DE UNA SOLICITUD · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se maneja hoy el vencimiento de una solicitud, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="3,2.5"/></svg>
+      Evento de inicio (automático / programado)
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2" stroke-dasharray="5,4"/></svg>
+      Flujo paralelo / fuera de secuencia principal
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2100 580" width="2100" height="580" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2080" height="560" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Donador -->
+      <rect x="54" y="10" width="2036" height="150" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="150" fill="#111111"/>
+      <text x="32" y="85" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 85)">🏢 DONADOR</text>
+
+      <!-- Lane 2: Backend (sistema) — primary -->
+      <rect x="54" y="160" width="2036" height="270" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="160" width="44" height="270" fill="#6b6b6b"/>
+      <text x="32" y="295" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 295)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- Lane 3: Usuario -->
+      <rect x="54" y="430" width="2036" height="140" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="430" width="44" height="140" fill="#111111"/>
+      <text x="32" y="500" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 500)">🏢 USUARIO</text>
+
+      <!-- START event (dashed border — scheduled/automatic trigger) -->
+      <circle cx="130" cy="295" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2" stroke-dasharray="4,3"/>
+      <text x="130" y="291" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10.5" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="130" y="303" font-family="Trebuchet MS, Arial, sans-serif" font-size="8" fill="#111111" text-anchor="middle">(cron)</text>
+      <text x="130" y="347" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="130" dy="0">Cron diario revisa solicitudes</tspan>
+        <tspan x="130" dy="11">abiertas vs. fecha límite</tspan>
+      </text>
+
+      <!-- Arrow: START -> T1 -->
+      <line x1="158" y1="295" x2="235" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T1: Cron detecta vencidas -->
+      <rect x="235" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="330" y="280" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="330" dy="0">Cron job diario revisa</tspan>
+        <tspan x="330" dy="13">solicitudes abiertas y</tspan>
+        <tspan x="330" dy="13">detecta las que llegaron</tspan>
+        <tspan x="330" dy="13">a su fecha límite</tspan>
+      </text>
+
+      <!-- Arrow: T1 -> T2 -->
+      <line x1="425" y1="295" x2="465" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T2: marca vencida, ventana de gracia -->
+      <rect x="465" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="560" y="280" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="560" dy="0">Backend marca la solicitud</tspan>
+        <tspan x="560" dy="13">como "vencida, en ventana</tspan>
+        <tspan x="560" dy="13">de gracia" (estado</tspan>
+        <tspan x="560" dy="13">temporal)</tspan>
+      </text>
+      <!-- Friction marker 1 (ALTA) — top-right of T2 -->
+      <circle cx="670" cy="232.5" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="670" y="236.5" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+      <!-- Friction marker 2 (MEDIA) — top-left of T2 -->
+      <circle cx="450" cy="232.5" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="450" y="236.5" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- Arrow: T2 -> T3 -->
+      <line x1="655" y1="295" x2="695" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T3: notifica al donador -->
+      <rect x="695" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="790" y="280" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="790" dy="0">Backend notifica al donador</tspan>
+        <tspan x="790" dy="13">(app + WhatsApp/SMS): venció,</tspan>
+        <tspan x="790" dy="13">hay partes en proceso, opciones</tspan>
+        <tspan x="790" dy="13">llegan en unos días</tspan>
+      </text>
+
+      <!-- Cross-lane arrow: T3 -> Donador A (upward handoff) -->
+      <line x1="790" y1="247.5" x2="790" y2="132.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Donador A: recibe notificación -->
+      <rect x="695" y="37.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="790" y="70" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="790" dy="0">Donador recibe notificación:</tspan>
+        <tspan x="790" dy="13">solicitud venció, hay partes</tspan>
+        <tspan x="790" dy="13">en proceso, opciones llegan</tspan>
+        <tspan x="790" dy="13">en unos días</tspan>
+      </text>
+
+      <!-- Arrow: T3 -> T5 (main flow continues) -->
+      <line x1="885" y1="295" x2="985" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Parallel branch (dashed): T2 -> Usuario box (ventana de gracia abre) -->
+      <path d="M560,342.5 C595,400 615,420 645,452.5" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="560" y="408" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111">ventana de gracia</text>
+      <text x="560" y="420" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111">(propuesta: 3-5 días)</text>
+
+      <!-- Usuario box: confirma partes durante la ventana -->
+      <rect x="555" y="452.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="650" y="485" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="650" dy="0">Usuario con partes tomadas</tspan>
+        <tspan x="650" dy="13">puede confirmarlas y cobrar</tspan>
+        <tspan x="650" dy="13">con normalidad durante la</tspan>
+        <tspan x="650" dy="13">ventana de gracia</tspan>
+      </text>
+
+      <!-- Parallel branch (dashed): Usuario box -> rejoins before T5 (ventana cierra) -->
+      <path d="M700,452.5 C760,390 880,360 1030,342.5" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="820" y="410" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111">cierra ventana de gracia</text>
+
+      <!-- T5: calcula reembolso -->
+      <rect x="985" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1080" y="280" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1080" dy="0">Backend calcula el reembolso</tspan>
+        <tspan x="1080" dy="13">final prorrateando el precio</tspan>
+        <tspan x="1080" dy="13">del Shas entre las Masejtot</tspan>
+        <tspan x="1080" dy="13">sin completar</tspan>
+      </text>
+
+      <!-- Arrow: T5 -> T6 -->
+      <line x1="1175" y1="295" x2="1275" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T6: presenta opciones al donador -->
+      <rect x="1275" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1370" y="280" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1370" dy="0">Backend presenta al donador</tspan>
+        <tspan x="1370" dy="13">las opciones (app/WhatsApp):</tspan>
+        <tspan x="1370" dy="13">reembolso, extender plazo,</tspan>
+        <tspan x="1370" dy="13">o dejar como donación</tspan>
+      </text>
+      <text x="1370" y="356" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">(decisión del donador — fuera del sistema)</text>
+
+      <!-- Cross-lane arrow: T6 -> Donador B (upward handoff) -->
+      <line x1="1370" y1="247.5" x2="1370" y2="132.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Donador B: recibe opciones y decide -->
+      <rect x="1275" y="37.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1370" y="70" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1370" dy="0">Donador recibe opciones y</tspan>
+        <tspan x="1370" dy="13">decide: reembolso, extender</tspan>
+        <tspan x="1370" dy="13">el plazo, o dejar como</tspan>
+        <tspan x="1370" dy="13">donación</tspan>
+      </text>
+
+      <!-- Arrow: T6 -> T7 -->
+      <line x1="1465" y1="295" x2="1565" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T7: solicitud cancelada por tiempo -->
+      <rect x="1565" y="247.5" width="190" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1660" y="289" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1660" dy="0">Solicitud queda marcada</tspan>
+        <tspan x="1660" dy="13">"cancelada por tiempo"</tspan>
+      </text>
+
+      <!-- Arrow: T7 -> END -->
+      <line x1="1755" y1="295" x2="1872" y2="295" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event (success) -->
+      <circle cx="1900" cy="295" r="28" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="1900" y="300" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="1900" y="347" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="1900" dy="0">Partes confirmadas conservan</tspan>
+        <tspan x="1900" dy="11">su pago para quien las estudió</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>La duración de la ventana de gracia no está definida formalmente — la propuesta informal es de 3 a 5 días, pero sigue pendiente de una decisión de negocio. Afecta tanto el momento en que se marca la solicitud como "vencida, en ventana de gracia" (paso 2) como la ventana en la que el usuario puede confirmar sus partes y cobrar (paso 4).</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>El estado intermedio "vencida, en ventana de gracia" agrega complejidad operativa que hay que manejar con cuidado — es similar a otros estados intermedios ya vistos en el sistema (pago en proceso, retiro en proceso), y multiplica los casos que el backend debe controlar correctamente.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
