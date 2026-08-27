@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Usuario toma una parte por la app · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --red:#dc2626;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — USUARIO TOMA UNA PARTE POR LA APP · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo un usuario toma una parte hoy, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin (éxito)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Evento de fin (descarte)
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 1900 500" width="1900" height="500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="1880" height="480" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane A: Usuario -->
+      <rect x="54" y="10" width="1836" height="160" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="160" fill="#111111"/>
+      <text x="32" y="90" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 90)">🏢 USUARIO</text>
+
+      <!-- Lane B: Backend (sistema) -->
+      <rect x="54" y="170" width="1836" height="320" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="170" width="44" height="320" fill="#6b6b6b"/>
+      <text x="32" y="330" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 330)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- START event -->
+      <circle cx="150" cy="90" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="150" y="94" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="150" y="142" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="150" dy="0">Usuario abre la app para</tspan>
+        <tspan x="150" dy="11">ver partes disponibles</tspan>
+      </text>
+
+      <!-- Arrow: START -> t1 -->
+      <line x1="178" y1="90" x2="222.5" y2="90" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t1: Usuario ve la lista -->
+      <rect x="222.5" y="42.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="315" y="80" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="315" dy="0">Usuario ve la lista de</tspan>
+        <tspan x="315" dy="13">solicitudes abiertas con</tspan>
+        <tspan x="315" dy="13">partes disponibles</tspan>
+      </text>
+
+      <!-- Arrow: t1 -> t2 -->
+      <line x1="407.5" y1="90" x2="472.5" y2="90" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t2: Usuario selecciona Masejet -->
+      <rect x="472.5" y="42.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="565" y="85" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="565" dy="0">Usuario selecciona un</tspan>
+        <tspan x="565" dy="13">Masejet libre</tspan>
+      </text>
+
+      <!-- Arrow: t2 -> t3 (cross-lane handoff into primary lane) -->
+      <line x1="565" y1="137.5" x2="565" y2="222.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t3: Backend verifica estatus -->
+      <rect x="472.5" y="222.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="565" y="260" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="565" dy="0">Backend verifica el</tspan>
+        <tspan x="565" dy="13">estatus de verificación</tspan>
+        <tspan x="565" dy="13">del usuario</tspan>
+      </text>
+
+      <!-- Arrow: t3 -> d1 -->
+      <line x1="657.5" y1="270" x2="770" y2="270" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- d1 gateway: ¿Usuario está verificado? -->
+      <text x="815" y="188" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="815" dy="0">¿Usuario está</tspan>
+        <tspan x="815" dy="13">verificado?</tspan>
+      </text>
+      <polygon points="815,225 860,270 815,315 770,270" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="815" y="275" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- Friction marker 1 on d1 -->
+      <circle cx="855" cy="222" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="855" y="226" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- d1 "No" branch: down to discard end 1 -->
+      <line x1="815" y1="315" x2="815" y2="372" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="830" y="347" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- discard end 1 -->
+      <circle cx="815" cy="400" r="28" fill="#FFFFFF" stroke="#dc2626" stroke-width="7"/>
+      <text x="815" y="405" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="815" y="442" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="815" dy="0">Toma denegada: cuenta</tspan>
+        <tspan x="815" dy="11">pendiente de verificación</tspan>
+      </text>
+
+      <!-- d1 "Sí" branch -> t4 -->
+      <line x1="860" y1="270" x2="972.5" y2="270" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="916" y="255" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- t4: Backend intenta registrar con bloqueo BD -->
+      <rect x="972.5" y="222.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1065" y="253" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1065" dy="0">Backend intenta registrar</tspan>
+        <tspan x="1065" dy="13">la toma en partes_tomadas</tspan>
+        <tspan x="1065" dy="13">con bloqueo de BD para</tspan>
+        <tspan x="1065" dy="13">evitar condición de carrera</tspan>
+      </text>
+
+      <!-- Friction marker 2 on t4 -->
+      <circle cx="1153" cy="217" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1153" y="221" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- Arrow: t4 -> d2 -->
+      <line x1="1157.5" y1="270" x2="1270" y2="270" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- d2 gateway: ¿BD aceptó el registro? -->
+      <text x="1315" y="188" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1315" dy="0">¿La base de datos</tspan>
+        <tspan x="1315" dy="13">aceptó el registro?</tspan>
+      </text>
+      <polygon points="1315,225 1360,270 1315,315 1270,270" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1315" y="275" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- d2 "No" branch: down to discard end 2 -->
+      <line x1="1315" y1="315" x2="1315" y2="372" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1330" y="347" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- discard end 2 -->
+      <circle cx="1315" cy="400" r="28" fill="#FFFFFF" stroke="#dc2626" stroke-width="7"/>
+      <text x="1315" y="405" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="1315" y="442" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="1315" dy="0">Parte ya no disponible:</tspan>
+        <tspan x="1315" dy="11">alguien más la tomó primero</tspan>
+      </text>
+
+      <!-- d2 "Sí" branch -> t5 -->
+      <line x1="1360" y1="270" x2="1472.5" y2="270" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1416" y="255" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- t5: éxito, parte registrada -->
+      <rect x="1472.5" y="222.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1565" y="253" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1565" dy="0">La parte desaparece de</tspan>
+        <tspan x="1565" dy="13">disponibles para los demás</tspan>
+        <tspan x="1565" dy="13">y el usuario ve pantalla</tspan>
+        <tspan x="1565" dy="13">de éxito con el Masejet</tspan>
+      </text>
+
+      <!-- Arrow: t5 -> END (cross-lane, back up into Lane A) -->
+      <line x1="1610" y1="222.5" x2="1730" y2="110" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event -->
+      <circle cx="1750" cy="90" r="28" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="1750" y="95" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="1750" y="142" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="1750" dy="0">Parte registrada a</tspan>
+        <tspan x="1750" dy="11">nombre del usuario</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>Depende del flujo de verificación de usuarios, que es otro proceso: sin usuario verificado no hay toma posible — un cuello de botella externo al flujo mismo.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>Requiere una restricción a nivel de base de datos (no un chequeo manual) para evitar que un mismo Masejet se asigne a dos personas al mismo tiempo — si no se implementa bien, es un punto real de falla de datos.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
