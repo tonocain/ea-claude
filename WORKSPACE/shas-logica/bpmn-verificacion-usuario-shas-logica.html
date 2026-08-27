@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Verificación de usuario por el admin · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — VERIFICACIÓN DE USUARIO POR EL ADMIN · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se verifica hoy a un usuario nuevo, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2" stroke-dasharray="5,4"/></svg>
+      Retrabajo / reintento
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2200 700" width="2200" height="700" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2180" height="650" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Usuario -->
+      <rect x="54" y="10" width="2136" height="110" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="110" fill="#111111"/>
+      <text x="32" y="65" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 65)">🏢 USUARIO</text>
+
+      <!-- Lane 2: App (interfaz) -->
+      <rect x="54" y="120" width="2136" height="110" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="120" width="44" height="110" fill="#6b6b6b"/>
+      <text x="32" y="175" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 175)">⚙️ APP (INTERFAZ)</text>
+
+      <!-- Lane 3: Backend (sistema) -->
+      <rect x="54" y="230" width="2136" height="220" fill="#f0f0f0" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="230" width="44" height="220" fill="#4a4a4a"/>
+      <text x="32" y="340" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 340)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- Lane 4: Admin -->
+      <rect x="54" y="450" width="2136" height="200" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="450" width="44" height="200" fill="#0A0A0A"/>
+      <text x="32" y="550" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 550)">👤 ADMIN</text>
+
+      <!-- START event -->
+      <circle cx="110" cy="65" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="110" y="69" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="110" y="105" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="110" dy="0">Usuario se registra</tspan>
+        <tspan x="110" dy="11">con teléfono y OTP</tspan>
+      </text>
+
+      <!-- Arrow: START -> A -->
+      <line x1="110" y1="93" x2="110" y2="127.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- A: App verifica OTP -->
+      <rect x="17.5" y="127.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="110" y="160" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="110" dy="0">App verifica</tspan>
+        <tspan x="110" dy="13">automáticamente</tspan>
+        <tspan x="110" dy="13">que el número sea</tspan>
+        <tspan x="110" dy="13">real (OTP)</tspan>
+      </text>
+
+      <!-- Arrow: A -> B -->
+      <line x1="150" y1="127.5" x2="290" y2="112.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- B: Usuario llena datos -->
+      <rect x="257.5" y="17.5" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="350" y="55" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="350" dy="0">Usuario llena sus</tspan>
+        <tspan x="350" dy="13">datos: nombre,</tspan>
+        <tspan x="350" dy="13">Kolel, CLABE</tspan>
+      </text>
+
+      <!-- Arrow: B -> C -->
+      <line x1="380" y1="112.5" x2="540" y2="245" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- C: Backend marca pendiente -->
+      <rect x="497.5" y="245" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="590" y="278" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="590" dy="0">Backend marca al</tspan>
+        <tspan x="590" dy="13">usuario como</tspan>
+        <tspan x="590" dy="13">"pendiente" y notifica</tspan>
+        <tspan x="590" dy="13">a los admins</tspan>
+      </text>
+
+      <!-- Arrow: C -> D -->
+      <line x1="620" y1="340" x2="780" y2="460" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D: Admin abre registro -->
+      <rect x="737.5" y="460" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="830" y="493" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="830" dy="0">Admin entra a la</tspan>
+        <tspan x="830" dy="13">cola de pendientes</tspan>
+        <tspan x="830" dy="13">y abre el registro</tspan>
+        <tspan x="830" dy="13">para revisarlo</tspan>
+      </text>
+
+      <!-- Arrow: D -> E -->
+      <line x1="880" y1="460" x2="1010" y2="445" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- E: Backend marca en revisión -->
+      <rect x="957.5" y="350" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1050" y="383" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1050" dy="0">Backend marca el</tspan>
+        <tspan x="1050" dy="13">registro "en revisión</tspan>
+        <tspan x="1050" dy="13">por [admin]" para</tspan>
+        <tspan x="1050" dy="13">bloquear a otros</tspan>
+      </text>
+      <!-- Friction marker 2 on E -->
+      <circle cx="1152.5" cy="340" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1152.5" y="344" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- Arrow: E -> F -->
+      <line x1="1080" y1="445" x2="1220" y2="460" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- F: Admin revisa y decide -->
+      <rect x="1177.5" y="460" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1270" y="493" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1270" dy="0">Admin revisa con</tspan>
+        <tspan x="1270" dy="13">base en su</tspan>
+        <tspan x="1270" dy="13">conocimiento de la</tspan>
+        <tspan x="1270" dy="13">comunidad y decide</tspan>
+      </text>
+      <!-- Friction marker 1 on F -->
+      <circle cx="1372.5" cy="450" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1372.5" y="454" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- Arrow: F -> DEC -->
+      <line x1="1362.5" y1="507.5" x2="1432" y2="507.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- DEC gateway -->
+      <text x="1480" y="428" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">¿Admin aprueba?</text>
+      <polygon points="1480,459.5 1528,507.5 1480,555.5 1432,507.5" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1480" y="512" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- DEC "Sí" branch -> G -->
+      <line x1="1480" y1="459.5" x2="1670" y2="340" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1530" y="430" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- G: Backend actualiza estatus verificado -->
+      <rect x="1597.5" y="245" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1690" y="278" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1690" dy="0">Backend actualiza</tspan>
+        <tspan x="1690" dy="13">estatus a</tspan>
+        <tspan x="1690" dy="13">"verificado" y</tspan>
+        <tspan x="1690" dy="13">registra en log_admin</tspan>
+      </text>
+
+      <!-- Arrow: G -> H -->
+      <line x1="1782.5" y1="292.5" x2="1807.5" y2="292.5" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- H: Backend notifica verificado -->
+      <rect x="1807.5" y="245" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1900" y="278" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1900" dy="0">Backend notifica</tspan>
+        <tspan x="1900" dy="13">al usuario por</tspan>
+        <tspan x="1900" dy="13">WhatsApp/SMS que</tspan>
+        <tspan x="1900" dy="13">quedó verificado</tspan>
+      </text>
+
+      <!-- Arrow: H -> END -->
+      <line x1="1950" y1="245" x2="2078" y2="93" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event (success) -->
+      <circle cx="2100" cy="65" r="28" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="2100" y="69" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="2100" y="105" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="2100" dy="0">Usuario verificado,</tspan>
+        <tspan x="2100" dy="11">ya puede tomar partes</tspan>
+      </text>
+
+      <!-- DEC "No" branch -> I -->
+      <line x1="1480" y1="555.5" x2="1480" y2="560" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="1495" y="548" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- I: Admin escribe motivo -->
+      <rect x="1387.5" y="560" width="185" height="85" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1480" y="592" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1480" dy="0">Admin escribe un</tspan>
+        <tspan x="1480" dy="13">motivo breve de</tspan>
+        <tspan x="1480" dy="13">rechazo</tspan>
+      </text>
+
+      <!-- Arrow: I -> J (dashed, rework) -->
+      <path d="M1572.5,590 C1660,580 1660,470 1680,447" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+      <!-- J: Backend marca rechazado -->
+      <rect x="1597.5" y="350" width="185" height="95" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1690" y="383" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1690" dy="0">Backend marca</tspan>
+        <tspan x="1690" dy="13">"rechazado" y</tspan>
+        <tspan x="1690" dy="13">notifica el motivo</tspan>
+        <tspan x="1690" dy="13">por WhatsApp/SMS</tspan>
+      </text>
+
+      <!-- Retry loop: J -> back to B (dashed, orthogonal via bottom margin) -->
+      <path d="M1690,445 L1690,680 L350,680 L350,112.5" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="1020" y="674" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">corrige y reenvía (sin límite de intentos)</text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>No hay documento de identidad de por medio: la verificación depende enteramente del conocimiento personal del admin sobre la comunidad (reconocer nombres/Kolelim), lo cual es subjetivo y no escala bien.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>El bloqueo "en revisión por [admin]" evita que dos admins procesen al mismo usuario a la vez — mismo patrón que la protección usada para evitar tomar el mismo Masejet dos veces.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
