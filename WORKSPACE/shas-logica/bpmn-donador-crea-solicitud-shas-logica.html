@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Donador crea una solicitud · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --red:#dc2626;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — DONADOR CREA UNA SOLICITUD · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se crea una solicitud hoy, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin (éxito)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Evento de fin (descarte)
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2" stroke-dasharray="5,4"/></svg>
+      Retrabajo / reintento
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2190 680" width="2190" height="680" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2170" height="650" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Donador (trigger/end lane) -->
+      <rect x="54" y="10" width="2126" height="160" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="160" fill="#111111"/>
+      <text x="32" y="90" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 90)">🏢 DONADOR</text>
+
+      <!-- Lane 2: App (interfaz) -->
+      <rect x="54" y="170" width="2126" height="140" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="170" width="44" height="140" fill="#6b6b6b"/>
+      <text x="32" y="240" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 240)">⚙️ APP (INTERFAZ)</text>
+
+      <!-- Lane 3: Stripe (externo) -->
+      <rect x="54" y="310" width="2126" height="120" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="310" width="44" height="120" fill="#111111"/>
+      <text x="32" y="370" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 370)">🏢 STRIPE (EXTERNO)</text>
+
+      <!-- Lane 4: Backend (sistema) — primary lane -->
+      <rect x="54" y="430" width="2126" height="220" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="430" width="44" height="220" fill="#6b6b6b"/>
+      <text x="32" y="540" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 540)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- START event -->
+      <circle cx="100" cy="90" r="26" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="100" y="94" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10.5" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="100" y="142" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666" text-anchor="middle">
+        <tspan x="100" dy="0">Donador abre la app para</tspan>
+        <tspan x="100" dy="10">crear una solicitud</tspan>
+      </text>
+
+      <!-- Arrow: START -> t1 -->
+      <line x1="126" y1="90" x2="205" y2="90" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t1: Donador abre e inicia -->
+      <rect x="205" y="45" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="280" y="80" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="280" dy="0">Donador abre la app</tspan>
+        <tspan x="280" dy="13">e inicia la creación</tspan>
+        <tspan x="280" dy="13">de una solicitud</tspan>
+      </text>
+
+      <!-- Arrow: t1 -> t2 -->
+      <line x1="355" y1="90" x2="385" y2="90" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t2: Donador llena formulario -->
+      <rect x="385" y="45" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="460" y="76" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="460" dy="0">Donador llena formulario:</tspan>
+        <tspan x="460" dy="13">tipo de Shas, fecha límite</tspan>
+        <tspan x="460" dy="13">(opcional), dedicatoria</tspan>
+      </text>
+      <!-- Friction marker 2 (MEDIA) on t2 -->
+      <circle cx="541" cy="39" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="541" y="43" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- Arrow: t2 -> t3 (cross-lane, down into App) -->
+      <line x1="460" y1="135" x2="640" y2="195" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t3: App muestra precio fijo -->
+      <rect x="565" y="195" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="640" y="226" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="640" dy="0">App muestra el precio</tspan>
+        <tspan x="640" dy="13">fijo del tipo elegido</tspan>
+        <tspan x="640" dy="13">(monto único, no por</tspan>
+        <tspan x="640" dy="13">Masejet)</tspan>
+      </text>
+
+      <!-- Arrow: t3 -> t4 (cross-lane, up into Donador) -->
+      <line x1="640" y1="195" x2="820" y2="135" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t4: Donador paga vía Stripe -->
+      <rect x="745" y="45" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="820" y="83" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="820" dy="0">Donador paga con</tspan>
+        <tspan x="820" dy="13">tarjeta vía Stripe</tspan>
+      </text>
+
+      <!-- Arrow: t4 -> t5 (cross-lane, down into Stripe) -->
+      <line x1="820" y1="135" x2="1000" y2="325" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- t5: Stripe procesa cobro -->
+      <rect x="925" y="325" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1000" y="360" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1000" dy="0">Stripe procesa el</tspan>
+        <tspan x="1000" dy="13">cobro y responde</tspan>
+        <tspan x="1000" dy="13">éxito/rechazo al backend</tspan>
+      </text>
+
+      <!-- Arrow: t5 -> d1 -->
+      <line x1="1075" y1="370" x2="1140" y2="370" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- d1: ¿Stripe aprueba el pago? -->
+      <text x="1180" y="300" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1180" dy="0">¿Stripe aprueba</tspan>
+        <tspan x="1180" dy="13">el pago?</tspan>
+      </text>
+      <polygon points="1180,330 1220,370 1180,410 1140,370" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1180" y="375" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- d1 "No" branch: up to discard (dashed, dead end) -->
+      <line x1="1180" y1="330" x2="1180" y2="112" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="1195" y="230" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- Discard 1: pago rechazado (end-discard, dead end) -->
+      <circle cx="1180" cy="90" r="22" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="1180" y="94" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10" fill="#dc2626" text-anchor="middle">Fin</text>
+      <text x="1180" y="126" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666" text-anchor="middle">
+        <tspan x="1180" dy="0">Nada se guarda. Donador ve</tspan>
+        <tspan x="1180" dy="10">error (tarjeta rechazada /</tspan>
+        <tspan x="1180" dy="10">fondos insuficientes) y</tspan>
+        <tspan x="1180" dy="10">puede reintentar sin límite</tspan>
+      </text>
+
+      <!-- d1 "Sí" branch -> t6 (cross-lane, down into Backend) -->
+      <line x1="1220" y1="370" x2="1360" y2="450" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1250" y="395" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- t6: Backend genera partes -->
+      <rect x="1285" y="450" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1360" y="481" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1360" dy="0">Backend consulta el</tspan>
+        <tspan x="1360" dy="13">catálogo de Masejtot</tspan>
+        <tspan x="1360" dy="13">del tipo elegido y genera</tspan>
+        <tspan x="1360" dy="13">todas las partes</tspan>
+      </text>
+      <!-- Friction marker 1 (CRÍTICA) on t6 -->
+      <circle cx="1441" cy="444" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1441" y="448" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- Arrow: t6 -> d2 -->
+      <line x1="1435" y1="495" x2="1500" y2="495" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- d2: ¿Se generaron las partes correctamente? -->
+      <text x="1540" y="425" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1540" dy="0">¿Se generaron las</tspan>
+        <tspan x="1540" dy="13">partes correctamente?</tspan>
+      </text>
+      <polygon points="1540,455 1580,495 1540,535 1500,495" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1540" y="500" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- d2 "No" branch: down to retry box (dashed) -->
+      <line x1="1540" y1="535" x2="1540" y2="555" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="1555" y="550" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- retry box: reintento automático -->
+      <rect x="1465" y="555" width="150" height="80" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2" stroke-dasharray="5,4"/>
+      <text x="1540" y="582" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="1540" dy="0">Reintento automático</tspan>
+        <tspan x="1540" dy="12">de generación de</tspan>
+        <tspan x="1540" dy="12">partes (1-2 veces)</tspan>
+      </text>
+
+      <!-- retry box -> loop back to d2 (dashed) -->
+      <path d="M1615,575 C1690,575 1690,510 1580,497" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <text x="1655" y="565" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111">reintenta</text>
+
+      <!-- retry box -> error box (solid, retries exhausted) -->
+      <line x1="1615" y1="605" x2="1645" y2="605" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1595" y="650" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666">tras 2 intentos fallidos</text>
+
+      <!-- error box: solicitud marcada error -->
+      <rect x="1645" y="555" width="150" height="80" rx="6" fill="#FFFFFF" stroke="#dc2626" stroke-width="2"/>
+      <text x="1720" y="580" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="1720" dy="0">Solicitud marcada</tspan>
+        <tspan x="1720" dy="12">"error, requiere revisión";</tspan>
+        <tspan x="1720" dy="12">se notifica al admin</tspan>
+      </text>
+
+      <!-- error box -> discard 2 -->
+      <line x1="1795" y1="595" x2="1812" y2="595" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Discard 2: fin por error persistente -->
+      <circle cx="1830" cy="595" r="18" fill="#FFFFFF" stroke="#dc2626" stroke-width="5"/>
+      <text x="1830" y="599" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="9" fill="#dc2626" text-anchor="middle">Fin</text>
+
+      <!-- d2 "Sí" branch -> t7 -->
+      <line x1="1580" y1="495" x2="1645" y2="495" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1600" y="480" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- t7: Backend confirma abierta -->
+      <rect x="1645" y="450" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1720" y="488" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1720" dy="0">Backend confirma la</tspan>
+        <tspan x="1720" dy="13">solicitud como</tspan>
+        <tspan x="1720" dy="13">"abierta"</tspan>
+      </text>
+
+      <!-- Arrow: t7 -> t8 (cross-lane, up into App) -->
+      <line x1="1720" y1="450" x2="1900" y2="285" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Arrow: t7 -> t9 (same row, Backend) -->
+      <line x1="1795" y1="495" x2="1825" y2="495" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1735" y="435" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666">(simultáneo)</text>
+
+      <!-- t8: App pantalla de éxito -->
+      <rect x="1825" y="195" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1900" y="222" font-family="Trebuchet MS, Arial, sans-serif" font-size="9.5" fill="#111111" text-anchor="middle">
+        <tspan x="1900" dy="0">App muestra pantalla de</tspan>
+        <tspan x="1900" dy="12">éxito (tipo, monto,</tspan>
+        <tspan x="1900" dy="12">dedicatoria) y envía</tspan>
+        <tspan x="1900" dy="12">confirmación por WhatsApp/SMS</tspan>
+        <tspan x="1900" dy="12">(Stripe manda su recibo aparte)</tspan>
+      </text>
+
+      <!-- t9: Backend SMS masivo -->
+      <rect x="1825" y="450" width="150" height="90" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1900" y="485" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1900" dy="0">Backend dispara SMS</tspan>
+        <tspan x="1900" dy="13">masivo automático a</tspan>
+        <tspan x="1900" dy="13">todos los usuarios</tspan>
+        <tspan x="1900" dy="13">verificados</tspan>
+      </text>
+
+      <!-- Arrow: t8 -> END (cross-lane, up into Donador) -->
+      <line x1="1900" y1="195" x2="2062" y2="108" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <!-- Arrow: t9 -> END (cross-lane, up into Donador) -->
+      <line x1="1900" y1="450" x2="2058" y2="114" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event (success) -->
+      <circle cx="2080" cy="90" r="26" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="2080" y="94" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="2080" y="142" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666" text-anchor="middle">
+        <tspan x="2080" dy="0">Solicitud "abierta", partes</tspan>
+        <tspan x="2080" dy="10">generadas, SMS enviado</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>Pago exitoso pero falla la generación de partes: hay dinero cobrado sin que el sistema haya cumplido su parte. Mitigado con reintentos automáticos + alerta al admin, pero sigue siendo un punto crítico a vigilar de cerca.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>Sin fecha límite, la solicitud puede quedar "abierta" indefinidamente sin ningún mecanismo de seguimiento automático (excluida del flujo de vencimiento).</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
