@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Confirmación de estudio completado · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --red:#dc2626;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — CONFIRMACIÓN DE ESTUDIO COMPLETADO · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se confirma hoy un estudio completado, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2"/></svg>
+      Evento de inicio
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin (éxito)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="7" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Evento de fin (descarte)
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2350 780" width="2350" height="780" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2330" height="760" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Usuario -->
+      <rect x="54" y="10" width="2276" height="235" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="235" fill="#111111"/>
+      <text x="32" y="128" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 128)">🏢 USUARIO</text>
+
+      <!-- Lane 2: App (interfaz) -->
+      <rect x="54" y="245" width="2276" height="90" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="245" width="44" height="90" fill="#6b6b6b"/>
+      <text x="32" y="290" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 290)">⚙️ APP (INTERFAZ)</text>
+      <text x="1195" y="295" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="10.5" fill="#888888" text-anchor="middle">Interfaz que usa el usuario en el camino por app — no ejecuta pasos propios en este proceso</text>
+
+      <!-- Lane 3: Admin -->
+      <rect x="54" y="335" width="2276" height="200" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="335" width="44" height="200" fill="#0A0A0A"/>
+      <text x="32" y="435" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 435)">👤 ADMIN</text>
+
+      <!-- Lane 4: Backend (sistema) -->
+      <rect x="54" y="535" width="2276" height="235" fill="#f0f0f0" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="535" width="44" height="235" fill="#4a4a4a"/>
+      <text x="32" y="652" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 652)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- ================= CAMINO POR APP (fila 1, lane Usuario) ================= -->
+
+      <!-- Start 1 -->
+      <circle cx="110" cy="75" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="110" y="79" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="110" y="118" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">Vía app</text>
+
+      <!-- Arrow Start1 -> A1 -->
+      <line x1="138" y1="75" x2="180" y2="75" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- A1 -->
+      <rect x="180" y="28" width="200" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="280" y="65" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="280" dy="0">Usuario entra a</tspan>
+        <tspan x="280" dy="13">"mis partes tomadas"</tspan>
+        <tspan x="280" dy="13">en la app</tspan>
+      </text>
+
+      <!-- Arrow A1 -> A2 -->
+      <line x1="380" y1="75" x2="460" y2="75" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- A2 -->
+      <rect x="460" y="28" width="200" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="560" y="52" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="560" dy="0">Usuario presiona</tspan>
+        <tspan x="560" dy="13">"completado" en un</tspan>
+        <tspan x="560" dy="13">Masejet (solo ve sus</tspan>
+        <tspan x="560" dy="13">propias partes)</tspan>
+      </text>
+      <!-- Friction marker 1 on A2 -->
+      <circle cx="665" cy="22" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="665" y="26" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- ================= CAMINO POR LLAMADA (fila 2, lane Usuario) ================= -->
+
+      <!-- Start 2 -->
+      <circle cx="110" cy="185" r="28" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="110" y="189" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="110" y="228" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">Vía llamada</text>
+
+      <!-- Arrow Start2 -> L1 -->
+      <line x1="138" y1="185" x2="180" y2="185" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- L1 -->
+      <rect x="180" y="138" width="200" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="280" y="178" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="280" dy="0">Usuario llama</tspan>
+        <tspan x="280" dy="13">avisando que</tspan>
+        <tspan x="280" dy="13">terminó</tspan>
+      </text>
+
+      <!-- Arrow L1 -> L2 (cross-lane down into Admin) -->
+      <line x1="380" y1="185" x2="460" y2="435" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- ================= ADMIN LANE (camino por llamada) ================= -->
+
+      <!-- L2 -->
+      <rect x="460" y="388" width="200" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="560" y="415" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="560" dy="0">Admin busca al usuario</tspan>
+        <tspan x="560" dy="13">por teléfono en el panel</tspan>
+        <tspan x="560" dy="13">y ve sus partes</tspan>
+        <tspan x="560" dy="13">pendientes de confirmar</tspan>
+      </text>
+      <!-- Friction marker 3 on L2 -->
+      <circle cx="665" cy="383" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="665" y="387" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">3</text>
+
+      <!-- Arrow L2 -> L3 -->
+      <line x1="660" y1="435" x2="760" y2="435" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- L3 -->
+      <rect x="760" y="388" width="200" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="860" y="415" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="860" dy="0">Admin selecciona y</tspan>
+        <tspan x="860" dy="13">marca como completada</tspan>
+        <tspan x="860" dy="13">la parte correspondiente</tspan>
+      </text>
+      <!-- Friction marker 2 on L3 -->
+      <circle cx="965" cy="383" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="965" y="387" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- Arrow L3 -> D1 (cross-lane down into Backend) -->
+      <line x1="860" y1="482" x2="860" y2="608" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- ================= BACKEND LANE (convergencia) ================= -->
+
+      <!-- D1 gateway: ¿ya estaba marcada como completada? -->
+      <text x="860" y="560" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="860" dy="0">¿La parte ya estaba</tspan>
+        <tspan x="860" dy="13">marcada como completada?</tspan>
+      </text>
+      <polygon points="860,608 907,655 860,702 813,655" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="860" y="660" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D1 "Sí" (duplicado) -> descarte -->
+      <line x1="860" y1="702" x2="860" y2="722" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="875" y="716" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- Discard end -->
+      <circle cx="860" cy="740" r="18" fill="#FFFFFF" stroke="#dc2626" stroke-width="5"/>
+      <text x="860" y="744" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="9" fill="#dc2626" text-anchor="middle">Bloqueado</text>
+
+      <!-- D1 "No" -> Acredita pago (credit box) -->
+      <line x1="907" y1="655" x2="1000" y2="655" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="950" y="640" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">No</text>
+
+      <!-- Merge: A2 (camino por app) -> Acredita pago, rodeando D1 por arriba -->
+      <path d="M560,122 C560,280 710,280 710,340 L710,655 C780,655 780,575 860,575 C950,575 1010,580 1060,608" fill="none" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Credit box (compartido) -->
+      <rect x="1000" y="608" width="220" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1110" y="642" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1110" dy="0">Backend acredita el</tspan>
+        <tspan x="1110" dy="13">pago fijo del Masejet al</tspan>
+        <tspan x="1110" dy="13">saldo del usuario</tspan>
+      </text>
+
+      <!-- Arrow credit -> log -->
+      <line x1="1220" y1="655" x2="1320" y2="655" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Log box (compartido) -->
+      <rect x="1320" y="608" width="220" height="94" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1430" y="642" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">
+        <tspan x="1430" dy="0">Backend genera registro</tspan>
+        <tspan x="1430" dy="13">en log_usuarios y</tspan>
+        <tspan x="1430" dy="13">transacciones</tspan>
+      </text>
+
+      <!-- Arrow log -> D2 -->
+      <line x1="1540" y1="655" x2="1633" y2="655" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D2 gateway: ¿última parte pendiente de la solicitud? -->
+      <text x="1680" y="560" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1680" dy="0">¿Esa parte era la última</tspan>
+        <tspan x="1680" dy="13">pendiente de la solicitud?</tspan>
+      </text>
+      <polygon points="1680,608 1727,655 1680,702 1633,655" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1680" y="660" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="15" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D2 "No" -> FIN -->
+      <line x1="1727" y1="655" x2="1948" y2="655" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1840" y="640" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">No</text>
+
+      <!-- D2 "Sí" -> anotación secundaria -->
+      <line x1="1680" y1="702" x2="1680" y2="722" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1695" y="716" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">Sí</text>
+
+      <!-- Secondary annotation box -->
+      <rect x="1560" y="722" width="240" height="40" rx="6" fill="#f0f0f0" stroke="#111111" stroke-width="1.5"/>
+      <text x="1680" y="736" font-family="Trebuchet MS, Arial, sans-serif" font-size="9" fill="#111111" text-anchor="middle">
+        <tspan x="1680" dy="0">Solicitud → "completada"; se notifica</tspan>
+        <tspan x="1680" dy="12">al donador (app + WhatsApp/SMS)</tspan>
+      </text>
+
+      <!-- Merge: anotación secundaria -> FIN -->
+      <path d="M1800,742 C1880,742 1880,700 1948,688" fill="none" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event (shared, success) -->
+      <circle cx="1980" cy="655" r="32" fill="#FFFFFF" stroke="#2f7d32" stroke-width="7"/>
+      <text x="1980" y="660" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="12" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="1980" y="704" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="1980" dy="0">Pago acreditado; log</tspan>
+        <tspan x="1980" dy="11">registrado en backend</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>Toda la confirmación es de buena fe: no hay validación de que el estudio realmente se hizo (ni tiempo mínimo ni evidencia). Riesgo de fraude/abuso, ya que acredita dinero real.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>En el camino por llamada, la integridad depende de que el admin seleccione bien al usuario y la parte correctos en su panel.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">3</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>El camino por app está protegido por diseño (el usuario solo ve sus propias partes pendientes), pero el camino por llamada no tiene esa misma barrera estructural.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
