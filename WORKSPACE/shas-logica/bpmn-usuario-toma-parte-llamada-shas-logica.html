@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BPMN — Usuario toma una parte por llamada · SHAS-LOGICA</title>
+<style>
+  :root{
+    --black:#111111;
+    --jet:#0A0A0A;
+    --yellow:#E8FF47;
+    --white:#FFFFFF;
+    --green:#2f7d32;
+    --gray:#666666;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:32px 24px 48px;
+  }
+  .pill{
+    display:inline-block;
+    background:var(--black);
+    color:var(--yellow);
+    font-weight:bold;
+    font-size:12px;
+    letter-spacing:0.06em;
+    padding:8px 16px;
+    border-radius:999px;
+  }
+  .subtitle{
+    margin:8px 0 0;
+    font-style:italic;
+    color:var(--gray);
+    font-size:13px;
+  }
+  h1{
+    margin:20px 0 6px;
+    font-size:26px;
+    color:var(--black);
+    font-weight:bold;
+    letter-spacing:0.01em;
+  }
+  .meta{
+    margin:0 0 20px;
+    color:var(--gray);
+    font-size:12.5px;
+  }
+  .banner{
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    text-align:center;
+    padding:14px 20px;
+    border-radius:6px;
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:22px;
+  }
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    align-items:center;
+    padding:12px 16px;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    margin-bottom:20px;
+    font-size:12px;
+    color:var(--black);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
+  }
+  .diagram-wrap{
+    width:100%;
+    overflow-x:auto;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:8px;
+    margin-bottom:28px;
+    background:var(--white);
+  }
+  .diagram-wrap svg{
+    display:block;
+  }
+  h2{
+    font-size:16px;
+    color:var(--black);
+    margin:0 0 14px;
+    font-weight:bold;
+  }
+  .friction-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .friction-card{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    border:1.5px solid #e2e2e2;
+    border-radius:8px;
+    padding:12px 16px;
+  }
+  .friction-num{
+    flex:0 0 auto;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:var(--yellow);
+    color:var(--black);
+    font-weight:bold;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .friction-body strong{
+    display:block;
+    font-size:12px;
+    margin-bottom:3px;
+  }
+  .friction-body span{
+    font-size:13px;
+    color:#333;
+    line-height:1.45;
+  }
+  footer{
+    text-align:center;
+    color:var(--gray);
+    font-size:11.5px;
+    margin-top:12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div>
+    <span class="pill">PROJECT KRATO</span>
+    <p class="subtitle">Diagnóstico de procesos — BPMN</p>
+  </div>
+
+  <h1>BPMN — USUARIO TOMA UNA PARTE POR LLAMADA · SHAS-LOGICA</h1>
+  <p class="meta">Cliente: shas-logica (app de dedicatorias de estudio religioso) · Fecha: 27 de agosto de 2026</p>
+
+  <div class="banner">
+    Fase actual: dibujar lo real, no lo ideal — este diagrama documenta cómo se toma una parte por llamada hoy, no cómo debería ser.
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#111111" stroke-width="2" stroke-dasharray="4,3"/></svg>
+      Evento de inicio (disparado por otro proceso)
+    </div>
+    <div class="legend-item">
+      <svg width="26" height="18" viewBox="0 0 26 18"><rect x="1" y="1" width="24" height="16" rx="4" fill="#FFFFFF" stroke="#111111" stroke-width="2"/></svg>
+      Tarea
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><polygon points="11,1 21,11 11,21 1,11" fill="#FFFFFF" stroke="#111111" stroke-width="2"/><text x="11" y="15" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">×</text></svg>
+      Decisión (gateway)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#2f7d32" stroke-width="5"/></svg>
+      Evento de fin (éxito)
+    </div>
+    <div class="legend-item">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="8" fill="none" stroke="#dc2626" stroke-width="5"/></svg>
+      Evento de fin (descarte)
+    </div>
+    <div class="legend-item">
+      <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E8FF47"/><text x="10" y="14" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" text-anchor="middle" fill="#111111">#</text></svg>
+      Punto de fricción
+    </div>
+    <div class="legend-item">
+      <svg width="30" height="10" viewBox="0 0 30 10"><line x1="0" y1="5" x2="30" y2="5" stroke="#111111" stroke-width="2"/></svg>
+      Flujo normal
+    </div>
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 2100 580" width="2100" height="580" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#111111"/>
+        </marker>
+      </defs>
+
+      <!-- Pool outer border -->
+      <rect x="10" y="10" width="2080" height="560" fill="none" stroke="#111111" stroke-width="2"/>
+
+      <!-- Lane 1: Usuario -->
+      <rect x="54" y="10" width="2036" height="170" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="10" width="44" height="170" fill="#111111"/>
+      <text x="32" y="95" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 95)">🏢 USUARIO</text>
+
+      <!-- Lane 2: Admin -->
+      <rect x="54" y="180" width="2036" height="260" fill="#FFFFFF" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="180" width="44" height="260" fill="#0A0A0A"/>
+      <text x="32" y="310" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 310)">👤 ADMIN</text>
+
+      <!-- Lane 3: Backend (sistema) -->
+      <rect x="54" y="440" width="2036" height="130" fill="#f5f5f5" stroke="#111111" stroke-width="1.5"/>
+      <rect x="10" y="440" width="44" height="130" fill="#6b6b6b"/>
+      <text x="32" y="505" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="13" fill="#FFFFFF" text-anchor="middle" transform="rotate(-90 32 505)">⚙️ BACKEND (SISTEMA)</text>
+
+      <!-- START event (dashed border: triggered by another process) -->
+      <circle cx="150" cy="95" r="24" fill="#FFFFFF" stroke="#111111" stroke-width="2" stroke-dasharray="5,4"/>
+      <text x="150" y="99" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10" fill="#111111" text-anchor="middle">Inicio</text>
+      <text x="150" y="140" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="150" dy="0">SMS de solicitud nueva</tspan>
+        <tspan x="150" dy="11">(broadcast, solo verificados)</tspan>
+      </text>
+
+      <!-- Arrow: START -> T1 -->
+      <line x1="174" y1="95" x2="275" y2="95" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T1: Usuario recibe SMS y llama -->
+      <rect x="275" y="57.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="350" y="88" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="350" dy="0">Usuario recibe SMS</tspan>
+        <tspan x="350" dy="13">y llama al número</tspan>
+        <tspan x="350" dy="13">de soporte</tspan>
+      </text>
+
+      <!-- Arrow: T1 -> T2 (cross-lane down, Usuario -> Admin) -->
+      <line x1="350" y1="132.5" x2="485" y2="245" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T2: Admin contesta la llamada -->
+      <rect x="485" y="207.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="560" y="245" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="560" dy="0">Admin contesta</tspan>
+        <tspan x="560" dy="13">la llamada</tspan>
+      </text>
+      <!-- Friction marker 1 (CRÍTICA) on T2 -->
+      <circle cx="638" cy="205" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="638" y="209" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">1</text>
+
+      <!-- Arrow: T2 -> T3 -->
+      <line x1="635" y1="245" x2="695" y2="245" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T3: Admin verifica en panel -->
+      <rect x="695" y="207.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="770" y="238" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="770" dy="0">Admin verifica en el</tspan>
+        <tspan x="770" dy="13">panel si el usuario</tspan>
+        <tspan x="770" dy="13">está verificado</tspan>
+      </text>
+
+      <!-- Arrow: T3 -> D1 -->
+      <line x1="845" y1="245" x2="935" y2="245" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D1 gateway: ¿Usuario está verificado? -->
+      <text x="970" y="170" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="970" dy="0">¿Usuario está</tspan>
+        <tspan x="970" dy="13">verificado?</tspan>
+      </text>
+      <polygon points="970,210 1005,245 970,280 935,245" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="970" y="250" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="14" fill="#111111" text-anchor="middle">×</text>
+      <!-- Friction marker 2 (ALTA) near D1 -->
+      <circle cx="1010" cy="205" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1010" y="209" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">2</text>
+
+      <!-- D1 "No" -> discard end 1 (same lane, vertical) -->
+      <line x1="970" y1="280" x2="970" y2="361" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="985" y="322" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- Discard end 1 -->
+      <circle cx="970" cy="385" r="24" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="970" y="389" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="970" y="422" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666" text-anchor="middle">
+        <tspan x="970" dy="0">Cuenta pendiente de</tspan>
+        <tspan x="970" dy="10">verificar; no se registra</tspan>
+      </text>
+
+      <!-- D1 "Sí" -> T4 -->
+      <line x1="1005" y1="245" x2="1095" y2="245" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1050" y="230" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- T4: Admin registra Masejet a mano -->
+      <rect x="1095" y="207.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1170" y="238" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1170" dy="0">Admin registra a mano</tspan>
+        <tspan x="1170" dy="13">en panel qué Masejet</tspan>
+        <tspan x="1170" dy="13">tomó el usuario</tspan>
+      </text>
+
+      <!-- Arrow: T4 -> T5 (cross-lane down, Admin -> Backend) -->
+      <line x1="1170" y1="282.5" x2="1295" y2="505" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- T5: Backend intenta guardar en partes_tomadas -->
+      <rect x="1295" y="467.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1370" y="498" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1370" dy="0">Backend guarda la toma</tspan>
+        <tspan x="1370" dy="13">en partes_tomadas (misma</tspan>
+        <tspan x="1370" dy="13">protección que la app)</tspan>
+      </text>
+      <!-- Friction marker 3 (MEDIA) on T5 -->
+      <circle cx="1450" cy="462" r="11" fill="#E8FF47" stroke="#111111" stroke-width="1"/>
+      <text x="1450" y="466" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#111111" text-anchor="middle">3</text>
+
+      <!-- Arrow: T5 -> D2 -->
+      <line x1="1445" y1="505" x2="1535" y2="505" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- D2 gateway: ¿La BD aceptó el registro? -->
+      <text x="1570" y="430" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1570" dy="0">¿La base de datos</tspan>
+        <tspan x="1570" dy="13">aceptó el registro?</tspan>
+      </text>
+      <polygon points="1570,470 1605,505 1570,540 1535,505" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1570" y="510" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="14" fill="#111111" text-anchor="middle">×</text>
+
+      <!-- D2 "No" -> discard end 2 (cross-lane up, Backend -> Admin) -->
+      <line x1="1570" y1="470" x2="1570" y2="409" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1585" y="445" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111">No</text>
+
+      <!-- Discard end 2 -->
+      <circle cx="1570" cy="385" r="24" fill="#FFFFFF" stroke="#dc2626" stroke-width="6"/>
+      <text x="1570" y="389" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="10" fill="#dc2626" text-anchor="middle">FIN</text>
+      <text x="1570" y="422" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="8.5" fill="#666666" text-anchor="middle">
+        <tspan x="1570" dy="0">Admin ve el rechazo y</tspan>
+        <tspan x="1570" dy="10">ofrece otra parte libre</tspan>
+      </text>
+
+      <!-- D2 "Sí" -> T6 -->
+      <line x1="1605" y1="505" x2="1695" y2="505" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="1650" y="490" font-family="Trebuchet MS, Arial, sans-serif" font-size="10.5" fill="#111111" text-anchor="middle">Sí</text>
+
+      <!-- T6: parte tomada + SMS de confirmación -->
+      <rect x="1695" y="467.5" width="150" height="75" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="2"/>
+      <text x="1770" y="498" font-family="Trebuchet MS, Arial, sans-serif" font-size="10" fill="#111111" text-anchor="middle">
+        <tspan x="1770" dy="0">Parte se marca como</tspan>
+        <tspan x="1770" dy="13">tomada; se envía SMS de</tspan>
+        <tspan x="1770" dy="13">confirmación con Masejet</tspan>
+      </text>
+
+      <!-- Arrow: T6 -> END (cross-lane up, Backend -> Usuario) -->
+      <line x1="1845" y1="467.5" x2="1973" y2="112" stroke="#111111" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- END event (success) -->
+      <circle cx="1990" cy="95" r="24" fill="#FFFFFF" stroke="#2f7d32" stroke-width="6"/>
+      <text x="1990" y="99" font-family="Trebuchet MS, Arial, sans-serif" font-weight="bold" font-size="11" fill="#2f7d32" text-anchor="middle">FIN</text>
+      <text x="1990" y="140" font-family="Trebuchet MS, Arial, sans-serif" font-style="italic" font-size="9" fill="#666666" text-anchor="middle">
+        <tspan x="1990" dy="0">Usuario recibe SMS de</tspan>
+        <tspan x="1990" dy="11">confirmación (Masejet)</tspan>
+      </text>
+
+    </svg>
+  </div>
+
+  <!-- Friction list -->
+  <h2>Puntos de fricción detectados (orden de prioridad)</h2>
+  <div class="friction-list">
+    <div class="friction-card">
+      <div class="friction-num">1</div>
+      <div class="friction-body">
+        <strong>🔴 CRÍTICA</strong>
+        <span>Depende de que el admin esté disponible para contestar la llamada: es un solo punto de falla humano para todo este canal — sin admin, no hay toma por teléfono.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">2</div>
+      <div class="friction-body">
+        <strong>🟠 ALTA</strong>
+        <span>Depende del flujo de verificación de usuarios (otro proceso): sin usuario verificado, no hay toma posible por este canal.</span>
+      </div>
+    </div>
+    <div class="friction-card">
+      <div class="friction-num">3</div>
+      <div class="friction-body">
+        <strong>🟡 MEDIA</strong>
+        <span>Comparte la misma protección de base de datos que la toma por app; un conflicto de Masejet ya tomado se resuelve igual, solo que aquí lo ve y comunica el admin en vez de la app.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHAS-LOGICA — Project Krato · Diagnóstico de procesos</footer>
+
+</div>
+</body>
+</html>
